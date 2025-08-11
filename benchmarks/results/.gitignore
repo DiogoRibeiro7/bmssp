@@ -1,0 +1,12 @@
+# Ignore generated benchmark results
+*.png
+*.pdf
+*.md
+*.json
+*.csv
+
+# Keep sample results
+!sample_results/
+sample_results/*
+!sample_results/*.md
+!sample_results/*.png
