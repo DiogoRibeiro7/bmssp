@@ -1,0 +1,5 @@
+matplotlib>=3.5.0
+networkx>=2.6.0
+numpy>=1.21.0
+plotly>=5.0.0  # Optional, for interactive visualizations
+scipy>=1.7.0   # For advanced analysis
