@@ -34,16 +34,20 @@ def _iter_edges(G: Graph) -> Iterable[Tuple[int, int, float]]:
 
 def _read_csv(path: Path) -> Tuple[int, EdgeList]:
     """
-    Reads a CSV file containing edge data and returns the number of nodes and the edge list.
+    Reads a CSV file containing edge data and returns the number of nodes
+    and the edge list.
 
-    Each line in the file should contain at least three columns: source node, target node, and edge weight.
-    Lines starting with '#' or empty lines are ignored. Columns can be separated by commas or tabs.
+    Each line in the file should contain at least three columns: source node,
+    target node, and edge weight.
+    Lines starting with '#' or empty lines are ignored. Columns can be
+    separated by commas or tabs.
 
     Args:
         path (Path): The path to the CSV file.
 
     Returns:
-        Tuple[int, EdgeList]: A tuple containing the number of nodes (max node id + 1) and a list of edges,
+        Tuple[int, EdgeList]: A tuple containing the number of nodes
+        (max node id + 1) and a list of edges,
         where each edge is represented as a tuple (u, v, w).
 
     Raises:
@@ -76,7 +80,8 @@ def _write_csv(path: Path, G: Graph) -> None:
     """
     Writes the edges of a graph to a CSV file.
 
-    Each row in the CSV file represents an edge in the graph, with columns for the source node, target node, and edge weight.
+    Each row in the CSV file represents an edge in the graph, with columns for
+    the source node, target node, and edge weight.
 
     Args:
         path (Path): The file path where the CSV will be written.
@@ -92,7 +97,7 @@ def _write_csv(path: Path, G: Graph) -> None:
 
 def _read_jsonl(path: Path) -> Tuple[int, EdgeList]:
     """
-    Reads a JSON Lines (JSONL) file containing graph edges and returns the 
+    Reads a JSON Lines (JSONL) file containing graph edges and returns the
     number of nodes and the edge list.
 
     Each line in the file should be a JSON object with keys "u", "v", and "w",
@@ -154,14 +159,18 @@ def _read_mtx(path: Path) -> Tuple[int, EdgeList]:
         path (Path): Path to the Matrix Market file.
 
     Returns:
-        Tuple[int, EdgeList]: A tuple containing the number of nodes (n) and the edge list.
-            The edge list is a list of tuples (u, v, w), where u and v are zero-based node indices,
-            and w is the edge weight.
+        Tuple[int, EdgeList]: (
+            A tuple containing the number of nodes (n) and the edge list.
+            The edge list is a list of tuples (u, v, w), where u and v
+            are zero-based node indices, and w is the edge weight.
+        )
 
     Notes:
         - Lines starting with '%' are treated as comments and skipped.
-        - Assumes the file contains at least three columns: source, target, and weight.
-        - Node indices in the file are assumed to be 1-based and are converted to 0-based.
+        - Assumes the file contains at least three columns: source, target,
+          and weight.
+        - Node indices in the file are assumed to be 1-based and are
+          converted to 0-based.
     """
     edges: EdgeList = []
     it = path.open("r", encoding="utf-8")
@@ -187,14 +196,17 @@ def _read_mtx(path: Path) -> Tuple[int, EdgeList]:
 
 def _write_mtx(path: Path, G: Graph) -> None:
     """
-    Writes the given graph `G` to a Matrix Market (.mtx) file at the specified path.
+    Writes the given graph `G` to a Matrix Market (.mtx) file at the specified
+    path.
 
-    The output file will contain the graph's adjacency matrix in coordinate format,
-    where each line represents an edge with its source node, target node, and weight.
-    Node indices are written as 1-based (Matrix Market convention).
+    The output file will contain the graph's adjacency matrix in coordinate
+    format, where each line represents an edge with its source node, target
+    node, and weight. Node indices are written as 1-based (Matrix Market
+    convention).
 
     Args:
-        path (Path): The file path where the Matrix Market file will be written.
+        path (Path): The file path where the Matrix Market file will be
+            written.
         G (Graph): The graph object containing nodes and weighted edges.
 
     Returns:
@@ -215,9 +227,10 @@ def _read_graphml(path: Path) -> Tuple[int, EdgeList]:
     Args:
         path (Path): Path to the GraphML file.
     Returns:
-        Tuple[int, EdgeList]: A tuple containing the number of nodes (as max node id + 1)
-        and a list of edges, where each edge is represented as a tuple (u, v, w) with
-        integer node IDs and float weights.
+        Tuple[int, EdgeList]: A tuple containing the number of nodes
+        (as max node id + 1) and a list of edges, where each edge is
+        represented as a tuple (u, v, w) with integer node IDs and
+        float weights.
     Raises:
         GraphFormatError: If no edges are parsed from the file.
     """
@@ -252,7 +265,21 @@ def _read_graphml(path: Path) -> Tuple[int, EdgeList]:
 
 
 def _write_graphml(path: Path, G: Graph) -> None:
-    """Write ``G`` as a GraphML edges file."""
+    """
+    Writes the given graph `G` to a GraphML file at the specified `path`.
+
+    Args:
+        path (Path): The file path where the GraphML output will be written.
+        G (Graph): The graph object to serialize, expected to have an
+            attribute `n` for the number of nodes.
+
+    Notes:
+        - The function assumes the graph is directed.
+        - Each node is assigned an ID in the format "n{i}".
+        - Edges are written with source, target, and weight attributes.
+        - The helper function `_iter_edges(G)` should yield tuples of (u, v, w)
+          for each edge.
+    """
     lines: List[str] = []
     lines.append('<?xml version="1.0" encoding="UTF-8"?>')
     lines.append('<graphml xmlns="http://graphml.graphdrawing.org/xmlns">')
@@ -289,8 +316,9 @@ def _detect_format(path: Path) -> Optional[str]:
         path (Path): The path to the file whose format is to be detected.
 
     Returns:
-        Optional[str]: The detected format as a string ("csv", "jsonl", "mtx", "graphml"),
-        or None if the format is not recognized.
+        Optional[str]: The detected format as a string
+        ("csv", "jsonl", "mtx", "graphml"), or None if the format is not
+        recognized.
     """
     ext = path.suffix.lower()
     if ext in {".csv", ".tsv"}:
@@ -310,7 +338,8 @@ def read_graph(path: str, fmt: Optional[str] = None) -> Graph:
 
     Args:
         path (str): The path to the graph file.
-        fmt (Optional[str], optional): The format of the graph file. If None, the format is auto-detected.
+        fmt (Optional[str], optional): The format of the graph file. If None,
+        the format is auto-detected.
 
     Returns:
         Graph: The graph object constructed from the file.
@@ -333,7 +362,8 @@ def write_graph(G: Graph, path: str, fmt: Optional[str] = None) -> None:
     Parameters:
         G (Graph): The graph object to be written.
         path (str): The file path where the graph will be saved.
-        fmt (Optional[str], optional): The format to use for writing the graph. If None, the format is auto-detected from the file extension.
+        fmt (Optional[str], optional): The format to use for writing the graph.
+        If None, the format is auto-detected from the file extension.
 
     Raises:
         GraphFormatError: If the format is unknown or unsupported.
