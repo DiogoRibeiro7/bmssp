@@ -1,0 +1,35 @@
+# Normalize line endings to LF in the repo
+* text=auto eol=lf
+
+# Windows-specific scripts keep CRLF
+*.bat eol=crlf
+*.cmd eol=crlf
+*.ps1 eol=crlf
+
+# Binary assets (no diffs)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.xz binary
+*.bz2 binary
+
+# Data / notebooks — avoid noisy diffs
+*.ipynb -diff
+*.parquet binary
+*.feather binary
+
+# Docs aren’t “code” for linguist stats
+docs/** linguist-documentation
+
+# Vendored/virtualenv noise (if ever committed)
+venv/** linguist-vendored
+.venv/** linguist-vendored
+
+# Minified bundles — no diffs
+*.min.* -diff

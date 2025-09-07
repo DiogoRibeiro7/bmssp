@@ -1,0 +1,14 @@
+comment: |
+  👋 Thanks for contributing!
+  🏷 Titles prefixed with feat:, fix:, docs:, or chore: are labeled automatically.
+labels:
+  enhancement:
+    - '^feat:'
+  bug:
+    - '^fix:'
+  documentation:
+    - '^docs:'
+  chore:
+    - '^chore:'
+  deps:
+    - '^deps:'

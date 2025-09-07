@@ -1,0 +1,112 @@
+[tool.poetry]
+name = "ssspx"
+version = "0.1.0"
+description = "Deterministic SSSP (BMSSP-style) with optional constant-outdegree transform and switchable frontier"
+authors = ["Diogo Ribeiro <dfr@esmad.ipp.pt>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "ssspx", from = "src" }]
+homepage = "https://github.com/DiogoRibeiro7/ssspx"
+repository = "https://github.com/DiogoRibeiro7/ssspx"
+documentation = "https://DiogoRibeiro7.github.io/bmssp-backhup/"
+keywords = ["shortest path", "graph", "dijkstra", "bmssp"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/DiogoRibeiro7/ssspx/issues"
+Changelog = "https://github.com/DiogoRibeiro7/ssspx/blob/main/CHANGELOG.md"
+
+
+[tool.poetry.dependencies]
+python = ">=3.9.2,<3.13"
+numpy = { version = "^2.0", optional = true }
+
+[tool.poetry.extras]
+numpy-backend = ["numpy"]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2"
+pytest-cov = "^5.0"
+flake8 = "^7.1"
+mypy = "^1.11"
+black = "^24.8"
+isort = "^5.13"
+pre-commit = "^3.8"
+hypothesis = "^6.112.0"
+python-semantic-release = "^9.9.0"
+pydocstyle = "^6.3"
+flake8-docstrings = "^1.7"
+docstr-coverage = "^2.3"
+cffconvert = "^2.0"
+cryptography = {version = "^44.0.1", markers = "python_version != '3.9.0' and python_version != '3.9.1'"}
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.18"
+mkdocstrings = {extras = ["python"], version = "^0.30.0"}
+mkdocs-jupyter = "^0.25.1"
+bandit = "^1.8.6"
+pip-audit = "^2.9.0"
+cibuildwheel = "^2.19.1"
+twine = "^5.1.1"
+nbclient = "^0.10"
+
+[tool.poetry.scripts]
+ssspx = "ssspx.cli:main"
+
+[tool.semantic_release]
+version_toml = "pyproject.toml:tool.poetry.version"
+version_variables = ["src/ssspx/__init__.py:__version__"]
+branch = "main"
+build_command = "poetry build"
+upload_to_pypi = false
+upload_to_release = true
+commit_parser = "angular"
+changelog_file = "CHANGELOG.md"
+
+[tool.flake8]
+max-line-length = 100
+extend-ignore = ["E203", "W503", "D401"]
+
+[tool.pydocstyle]
+convention = "google"
+add-ignore = ["D401"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+addopts = "--cov=ssspx --cov-branch --cov-report=term-missing -m 'not integration and not regression and not stress' --doctest-glob='*.md'"
+testpaths = ["tests", "README.md"]
+markers = [
+    "integration: mark integration tests",
+    "regression: mark regression snapshot tests",
+    "stress: mark stress tests",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["src/ssspx"]
+omit = [
+    "src/ssspx/cli.py",
+    "src/ssspx/bench.py",
+    "src/ssspx/export.py",
+    "src/ssspx/io.py",
+    "src/ssspx/profiling.py",
+    "src/ssspx/graph.py",
+    "src/ssspx/graph_numpy.py",
+    "src/ssspx/path.py",
+    "src/ssspx/solver.py",
+    "src/ssspx/deprecation.py",
+]
+
+[tool.coverage.report]
+skip_empty = true

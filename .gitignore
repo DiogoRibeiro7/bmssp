@@ -3,47 +3,76 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environment
-venv/
+# Virtual environments (Poetry creates .venv in-project by default)
 .venv/
+venv/
 env/
-ENV/
-.conda/
+
+# Poetry
+# (lock file is committed; cache dirs aren’t)
+poetry.toml
+# If you keep a global cache dir locally
+.cache/pypoetry/
 
 # Distribution / packaging
 build/
 dist/
 *.egg-info/
+.eggs/
+MANIFEST
+wheelhouse/
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
-
-# VS Code settings
-.vscode/
-
-# macOS system files
-.DS_Store
-
-# Pytest cache
+# Unit test / coverage reports
 .pytest_cache/
-
-# Coverage reports
-htmlcov/
 .coverage
 .coverage.*
-.cache
-nosetests.xml
+htmlcov/
+.tox/
+.nox/
 coverage.xml
 
-# MyPy type checker
+# Type checkers / linters
 .mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
 
-# Profiling data
-.prof
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
 
-# Temporary files
-tmp/
-*.tmp
+# Logs
+*.log
+logs/
+coverage/
 
-# Rust build output
-rust/target/
+# MkDocs build output
+site/
+
+# IDE / editors
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+.env.*
+*.env
+*.secret
+secrets/
+
+# Misc
+.swp
+.swo
+
+# Generated reproduction artifacts
+paper/figures/*.csv
+paper/figures/*.png
+paper/figures/*.svg
+paper/figures/*.json
+paper/figures/*.zip

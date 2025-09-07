@@ -1,0 +1,21 @@
+# CODEOWNERS: order matters; later matches take precedence.
+
+# Default owner for everything
+
+- @DiogoRibeiro7
+
+# Source code
+
+/src/ssspx/ @DiogoRibeiro7
+
+# Tests
+
+/tests/ @DiogoRibeiro7
+
+# CI workflows
+
+/.github/workflows/ @DiogoRibeiro7
+
+# Tooling & configs
+
+/pyproject.toml @DiogoRibeiro7 /.pre-commit-config.yaml @DiogoRibeiro7 /mypy.ini @DiogoRibeiro7 /.gitattributes @DiogoRibeiro7 /.gitignore @DiogoRibeiro7 /README.md @DiogoRibeiro7 /LICENSE @DiogoRibeiro7

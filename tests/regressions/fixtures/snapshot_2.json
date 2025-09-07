@@ -1,0 +1,15 @@
+{
+  "seed": 42,
+  "n": 6,
+  "m": 12,
+  "frontier": "heap",
+  "transform": false,
+  "distances": [
+    0.0,
+    6.981393949882,
+    null,
+    null,
+    13.001581240382,
+    null
+  ]
+}

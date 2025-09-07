@@ -1,0 +1,69 @@
+name: Update dependencies
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  deps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: 1.8.3
+      - name: Update pre-commit hooks
+        run: pre-commit autoupdate
+      - name: Update poetry dependencies
+        run: poetry update
+      - name: Install dependencies
+        run: poetry install
+      - name: Pre-commit
+        run: pre-commit run --show-diff-on-failure --color=always --all-files
+      - name: Docstring style
+        run: poetry run pydocstyle src/ssspx
+      - name: Docstring coverage
+        run: poetry run interrogate -q -c pyproject.toml
+      - name: Build docs
+        run: poetry run mkdocs build --strict
+      - name: Run tests
+        run: |
+          PYTHONPATH=src poetry run pytest -q
+          PYTHONPATH=src poetry run pytest -q -m integration
+          PYTHONPATH=src poetry run pytest -q -m regression
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "deps: weekly dependency updates"
+          branch: chore/deps
+          title: "deps: weekly dependency updates"
+          body: |
+            ## Summary
+            - Update pre-commit hooks
+            - Update Poetry dependencies
+
+            ## Testing
+            - `pre-commit run --show-diff-on-failure --color=always --all-files`
+            - `poetry run pydocstyle src/ssspx`
+            - `poetry run interrogate -q -c pyproject.toml`
+            - `poetry run mkdocs build --strict`
+            - `PYTHONPATH=src poetry run pytest -q`
+            - `PYTHONPATH=src poetry run pytest -q -m integration`
+            - `PYTHONPATH=src poetry run pytest -q -m regression`
+          labels: deps

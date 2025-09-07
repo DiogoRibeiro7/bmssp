@@ -1,0 +1,11 @@
+name: "Question"
+description: "Ask a question about using ssspx"
+title: "question: "
+labels: [question]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: What is your question?
+    validations:
+      required: true

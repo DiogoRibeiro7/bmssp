@@ -1,0 +1,43 @@
+usage: ssspx [-h] [--verbose] [--log-json] [--log-level {debug,info,warning}] (--edges EDGES | --random | --example)
+             [--format {csv,jsonl,mtx,graphml}] [--n N] [--m M] [--seed SEED] [--source SOURCE | --sources SOURCES]
+             [--target TARGET] [--no-transform] [--target-outdeg TARGET_OUTDEG] [--frontier {block,heap}] [--profile]
+             [--profile-out PROFILE_OUT] [--export-json EXPORT_JSON] [--export-graphml EXPORT_GRAPHML]
+             [--metrics-out METRICS_OUT]
+
+Deterministic SSSP (BMSSP-style) runner
+
+options:
+  -h, --help            show this help message and exit
+  --verbose             Show full tracebacks
+  --log-json            Emit structured log line
+  --log-level {debug,info,warning}
+                        Log verbosity
+  --edges EDGES         Path to edges file
+  --random              Use a random graph
+  --example             Print a sample edges CSV to stdout and exit
+  --format {csv,jsonl,mtx,graphml}
+                        Edge file format (auto-detected from extension)
+  --n N                 Vertices (random mode)
+  --m M                 Edges (random mode)
+  --seed SEED           Seed controlling random graph generation
+  --source SOURCE       Source vertex id
+  --sources SOURCES     Comma-separated list of source vertex ids
+  --target TARGET       Target vertex id for path output
+  --no-transform        Disable outdegree transform
+  --target-outdeg TARGET_OUTDEG
+                        Outdegree cap when transforming
+  --frontier {block,heap}
+  --profile             Enable cProfile
+  --profile-out PROFILE_OUT
+                        Dump .prof file to this path
+  --export-json EXPORT_JSON
+                        Write shortest-path DAG as JSON
+  --export-graphml EXPORT_GRAPHML
+                        Write shortest-path DAG as GraphML
+  --metrics-out METRICS_OUT
+                        Write run metrics to this JSON file
+
+Examples:
+  ssspx --edges graph.csv --source 0
+  ssspx --random --n 100 --m 500
+  ssspx --edges graph.csv --export-json dag.json

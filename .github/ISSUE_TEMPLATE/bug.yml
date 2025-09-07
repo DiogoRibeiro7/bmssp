@@ -1,0 +1,26 @@
+name: "Bug report"
+description: "Report a reproducible bug"
+title: "bug: "
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Provide steps to reproduce the issue.
+      placeholder: "Steps to reproduce..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: "OS, Python version, dependency versions"
+    validations:
+      required: false

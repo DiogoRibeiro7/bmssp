@@ -1,0 +1,39 @@
+{% set name = "ssspx" %}
+{% set version = load_setup_py_data().get("version") %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  path: ..
+
+build:
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . -vv"
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+    - numpy
+
+test:
+  imports:
+    - ssspx
+  commands:
+    - ssspx --help
+
+about:
+  home: https://github.com/DiogoRibeiro7/ssspx
+  license: MIT
+  license_file: LICENSE
+  summary: "Deterministic SSSP solver with optional constant-outdegree transform"
+  doc_url: https://DiogoRibeiro7.github.io/bmssp-backhup/
+  dev_url: https://github.com/DiogoRibeiro7/ssspx
+
+extra:
+  recipe-maintainers:
+    - DiogoRibeiro7

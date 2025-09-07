@@ -1,0 +1,11 @@
+- [ ] P0: Format repository with `black` and `isort`, then fix flake8 issues (missing docstrings, long lines). (owner: @DiogoRibeiro7) — PR: `style: format codebase`
+- [ ] P0: Resolve mypy errors in `src/ssspx/io.py` and `src/ssspx/graph_numpy.py`. (owner: @DiogoRibeiro7) — PR: `fix: tighten typing`
+- [ ] P0: Rewrite `load_graph` docstring in `src/ssspx/io.py` to satisfy D401. (owner: @DiogoRibeiro7) — PR: `docs: clarify load_graph`
+- [ ] P0: Raise unit-test coverage to ≥95% and ensure pytest exits without manual interrupts. (owner: @DiogoRibeiro7) — PR: `test: improve coverage`
+- [ ] P0: Investigate CLI `--random` performance; ensure `ssspx --random ...` terminates normally. (owner: @DiogoRibeiro7) — PR: `perf: stabilize random CLI`
+- [ ] P0: Upgrade `cryptography` (>=44.0.1) and replace/remove vulnerable `py` dependency to satisfy `pip-audit`. (owner: @DiogoRibeiro7) — PR: `deps: bump cryptography`
+- [ ] P1: Add semantic-release command or documentation for previewing next version. (owner: @DiogoRibeiro7) — PR: `docs: semantic-release guide`
+- [ ] P1: Allow `python -m ssspx.bench` without flags or document required `--sizes`. (owner: @DiogoRibeiro7) — PR: `feat: bench defaults`
+- [ ] P1: Enable citation validation by adding `cffconvert` to dev deps and CI. (owner: @DiogoRibeiro7) — PR: `chore: verify citation`
+- [ ] P2: Add minimal docstrings to test modules or adjust flake8 configuration. (owner: @DiogoRibeiro7) — PR: `chore: test docstrings`
+- [ ] P2: Support cross-version testing by enabling virtualenvs or using `--break-system-packages`; install Python 3.9. (owner: @DiogoRibeiro7) — PR: `ci: enable py39`

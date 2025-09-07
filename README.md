@@ -1,285 +1,236 @@
-# BMSSP – Breaking the Sorting Barrier for Directed SSSP (Multi-language Implementations)
+# ssspx — Production‑grade Single‑Source Shortest Paths (Python)
 
-This repository contains **multi-language reference implementations** of the algorithms from:
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.0000000.svg)](https://doi.org/10.5281/zenodo.0000000)
 
-> **Breaking the Sorting Barrier for Directed Single-Source Shortest Paths**  
-> [arXiv:2504.17033v2](https://arxiv.org/abs/2504.17033)  
-> Ran Duan, Jiayi Mao, Xiao Mao, Xinkai Shu, Longhui Yin, 2025
+`ssspx` is a clean, typed, and tested implementation of a deterministic **Single‑Source Shortest Paths** solver for directed graphs with non‑negative weights. It follows a BMSSP‑style divide‑and‑conquer design (levels, `FindPivots`, bounded base case) and includes a switchable frontier, an optional constant‑outdegree transform, a CLI, exports, and a small benchmark harness.
 
-**🎯 Breakthrough Result**: This paper presents the first deterministic algorithm to break Dijkstra's O(m + n log n) time bound for directed single-source shortest paths, achieving **O(m log^(2/3) n)** time complexity.
-
-Currently implemented in:
-
- - ✅ Python
- - ✅ Go
- - ✅ Fortran
- - ✅ C
- - ✅ Rust
- - ✅ Java
+> For the advertised asymptotics, use the **block frontier** with the **constant‑outdegree transform** enabled. Distances are exact either way.
 
 ---
 
-## Algorithm Overview
+## Features
 
-The BMSSP (Bounded Multi-Source Shortest Path) algorithm uses a novel recursive partitioning technique that merges ideas from both Dijkstra's algorithm and the Bellman-Ford algorithm:
+* Two frontiers: `block` (paper‑style) and `heap` (baseline)
+* Optional constant‑outdegree transform (cap configurable, default 4)
+* Path reconstruction in original vertex IDs (works with or without transform)
+* Shortest‑path DAG export to **JSON** and **GraphML**
+* CLI with CSV/TSV/JSONL/MTX/GraphML input, random graphs, and optional cProfile
+* Benchmark harness vs. Dijkstra
+* Typed (mypy), linted (flake8/black/isort), tested (pytest + Hypothesis)
 
-### Core Innovation
+## Limitations
 
-- **Frontier Reduction**: Instead of maintaining a frontier of size Θ(n), the algorithm reduces it to |U|/log^Ω(1)(n)
-- **Pivot Selection**: Uses bounded Bellman-Ford expansion to identify "pivot" vertices that cover large subtrees
-- **Recursive Structure**: Employs O(log n / t) levels of recursion with specialized data structures
+* Edge weights must be **non-negative**. Supplying a negative weight raises a
+  ``GraphFormatError`` that points to the exact offending edge.
 
-### Key Components
+## Documentation
 
-1. **FindPivots** (Lemma 3.2) – Bounded Bellman-Ford expansion with pivot selection
-2. **BaseCase** – Small-instance solver using Dijkstra-like approach  
-3. **BMSSP** – Main recursive bounded multi-source shortest path solver
-4. **DQueue** – Specialized data structure supporting bounded batch operations
+Full guides and the API reference live at the
+[project documentation site](https://DiogoRibeiro7.github.io/bmssp-backhup/).
+Algorithmic details are covered in the
+[BMSSP design notes](docs/design/bmssp.md), and key trade‑offs are tracked in
+[Architecture Decision Records](docs/decisions/).
 
-📚 **New to BMSSP?** See our [detailed algorithm walkthrough](ALGORITHM_WALKTHROUGH.md) with step-by-step examples and complexity analysis.
+## Stability policy
 
----
-
-## Performance Analysis
-
-🔬 **Want to see when BMSSP outperforms Dijkstra?** 
-
-Our comprehensive benchmark suite analyzes:
-
-- **Runtime crossover points** for different graph types and sizes
-- **Memory usage comparisons** showing BMSSP's efficiency gains  
-- **Theoretical vs empirical complexity** validation with real data
-- **Graph type sensitivity** (sparse, scale-free, grid, small-world networks)
-
-### Quick Start
-
-```bash
-cd benchmarks
-pip install -r requirements.txt
-python performance_analysis.py
-```
-
-This generates:
-
-- `PERFORMANCE_REPORT.md` - Detailed analysis with crossover points
-- `performance_analysis.png` - Comprehensive comparison plots
-- Console output with key findings and recommendations
-
-### Expected Results
-
-| Graph Type | Crossover Point | Max Improvement | Memory Reduction |
-|------------|----------------|-----------------|------------------|
-| Sparse Random | n ≈ 200-500 | ~60% faster | ~20% |
-| Scale-Free | n ≈ 100-300 | ~70% faster | ~25% |
-| Small-World | n ≈ 300-600 | ~50% faster | ~15% |
-| Grid | n ≈ 400-800 | ~40% faster | ~10% |
-
-📚 See [`benchmarks/README.md`](benchmarks/README.md) for detailed performance analysis documentation.
-
----
-
-## Algorithm Overview
-
-The BMSSP (Bounded Multi-Source Shortest Path) algorithm uses a novel recursive partitioning technique that merges ideas from both Dijkstra's algorithm and the Bellman-Ford algorithm:
-
-### Core Innovation
-
-- **Frontier Reduction**: Instead of maintaining a frontier of size Θ(n), the algorithm reduces it to |U|/log^Ω(1)(n)
-- **Pivot Selection**: Uses bounded Bellman-Ford expansion to identify "pivot" vertices that cover large subtrees
-- **Recursive Structure**: Employs O(log n / t) levels of recursion with specialized data structures
-
-### Key Components
-
-1. **FindPivots** (Lemma 3.2) – Bounded Bellman-Ford expansion with pivot selection
-2. **BaseCase** – Small-instance solver using Dijkstra-like approach  
-3. **BMSSP** – Main recursive bounded multi-source shortest path solver
-4. **DQueue** – Specialized data structure supporting bounded batch operations
-
----
-
-## Important Notes
-
-⚠️ **These are research algorithm implementations**, not general-purpose shortest path solvers:
-
-- **Theoretical Focus**: Optimized for asymptotic complexity O(m log^(2/3) n), not practical performance on small graphs
-- **Bounded Computation**: May not compute complete shortest path trees due to algorithmic bounds and early termination conditions
-- **Parameter Sensitivity**: Uses specific parameters k = ⌊log^(1/3) n⌋ and t = ⌊log^(2/3) n⌋ derived from theoretical analysis
-- **Research Code**: Prioritizes algorithmic clarity over production optimizations
-
-For practical shortest path computation, use standard implementations of Dijkstra's algorithm or other established methods.
-
----
-
-## Repository Structure
-
-```
-/
-├── README.md                     # This file
-├── ALGORITHM_WALKTHROUGH.md      # Detailed algorithm explanation
-├── benchmarks/                   # Performance analysis suite
-│   ├── README.md                # Performance analysis documentation
-│   ├── performance_analysis.py  # Main benchmarking script
-│   ├── requirements.txt         # Python dependencies
-│   ├── run_benchmarks.sh        # Automated benchmark runner
-│   ├── results/                 # Generated performance data
-│   └── scripts/                 # Additional analysis tools
-├── implementations/              # Algorithm implementations
-│   ├── python/                  # Python reference implementation
-│   ├── go/                      # Go implementation
-│   ├── c/                       # C implementation
-│   ├── rust/                    # Rust implementation
-│   ├── java/                    # Java implementation
-│   └── fortran/                 # Fortran implementation
-├── docs/                        # Additional documentation
-│   ├── paper/                   # Research paper reference
-│   └── examples/                # Educational examples
-└── .gitignore                   # Git ignore rules
-```
-
-Each language implementation includes:
-```
-implementations/<language>/
-├── bmssp.<ext>          # Main algorithm implementation
-├── tests/               # Correctness verification
-├── README.md           # Language-specific instructions
-└── ...                 # Build files (Makefile, package files, etc.)
-```
-
----
-
-## Running the Implementations
-
-### Python
-
-```bash
-cd implementations/python
-python bmssp.py
-```
-
-### Go
-
-```bash
-cd implementations/go
-go run bmssp.go
-```
-
-### Fortran
-
-```bash
-cd implementations/fortran
-gfortran bmssp.f90 -o bmssp
-./bmssp
-```
-
-### C
-
-```bash
-cd implementations/c
-gcc bmssp.c -lm -o bmssp
-./bmssp
-```
-
-### Rust
-
-```bash
-cd implementations/rust
-cargo run
-```
-
-### Java
-
-```bash
-cd implementations/java
-javac BMSSP.java
-java BMSSP
-```
-
----
-
-## Testing
-
-Each implementation includes test cases that verify the algorithm's behavior on small example graphs. The tests validate:
-
-- Correct implementation of the recursive structure
-- Proper handling of bounds and early termination
-- Expected algorithmic behavior under the BMSSP framework
-
-Run tests using the respective language's testing framework:
-
-```bash
-# Python
-cd implementations/python && python -m pytest
-
-# Go  
-cd implementations/go && go test
-
-# C
-cd implementations/c && python -m pytest tests/
-
-# Fortran
-cd implementations/fortran && python -m pytest tests/
-
-# Rust
-cd implementations/rust && cargo test
-
-# Java
-cd implementations/java && javac BMSSPTest.java && java BMSSPTest
-```
-
----
-
-## Technical Details
-
-### Time Complexity
-
-- **Main Result**: O(m log^(2/3) n) deterministic time
-- **Comparison**: Breaks Dijkstra's O(m + n log n) barrier on sparse graphs
-- **Model**: Comparison-addition model with real non-negative edge weights
-
-### Key Parameters
-
-- `k = ⌊log^(1/3) n⌋` - Controls pivot selection and base case size
-- `t = ⌊log^(2/3) n⌋` - Determines recursion branching factor  
-- `l = ⌈log n / t⌉` - Number of recursion levels
-
-### Graph Preprocessing
-
-All implementations assume constant-degree graphs. For general graphs, the algorithm applies a standard vertex-splitting transformation to achieve constant in-degree and out-degree while preserving shortest paths.
-
----
-
-## Research Context
-
-This work represents a significant theoretical breakthrough in graph algorithms:
-
-- **First** to break the sorting barrier for directed SSSP in the comparison-addition model
-- **Deterministic** improvement over previous randomized results
-- **Novel techniques** combining Dijkstra and Bellman-Ford through recursive partitioning
-
-The algorithm demonstrates that Dijkstra's approach, while optimal when vertex ordering is required, is not optimal for computing distances alone.
-
----
-
-## Citation
-
-```bibtex
-@article{duan2025breaking,
-  title={Breaking the Sorting Barrier for Directed Single-Source Shortest Paths},
-  author={Duan, Ran and Mao, Jiayi and Mao, Xiao and Shu, Xinkai and Yin, Longhui},
-  journal={arXiv preprint arXiv:2504.17033},
-  year={2025}
-}
-```
-
----
+Public modules and classes are listed in our
+[API stability policy](docs/policy/api.md). Deprecated names emit warnings and
+are removed after the stated ``remove_in`` release.
 
 ## Contributing
 
-When contributing to this repository:
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and
+testing instructions.
 
-1. **Maintain algorithmic fidelity** - Preserve the theoretical structure of BMSSP
-2. **Follow paper notation** - Use variable names and structure consistent with the research paper
-3. **Test carefully** - Ensure implementations match expected BMSSP behavior, not standard SSSP
-4. **Document clearly** - Explain any implementation-specific choices or optimizations
+---
 
-For questions about the algorithm itself, refer to the original research paper.
+## Installation
+
+```bash
+# in your repo
+poetry install
+pre-commit install  # optional but recommended
+```
+
+Python ≥ 3.9. NumPy is optional (for a CSR backend).
+
+Install with NumPy extras:
+
+```bash
+poetry install -E numpy-backend
+```
+
+The DOI above is a placeholder. After your first release, run `python tools/update_citation.py <doi>` to update this citation and CITATION.cff.
+
+---
+
+## Quick start (Python)
+
+```python
+>>> from ssspx.io import read_graph
+>>> from ssspx import SSSPSolver, SolverConfig
+>>> G = read_graph("docs/examples/small.csv")
+>>> solver = SSSPSolver(G, 0, config=SolverConfig())
+>>> solver.solve().distances
+[0.0, 1.0, 3.0, 4.0]
+```
+
+---
+
+## CLI
+
+```bash
+# Edges from file (auto-detected: CSV, JSONL, MTX, GraphML)
+poetry run ssspx --edges docs/examples/small.csv --source 0 \
+  --frontier block --export-graphml out.graphml --export-json out.json
+
+# Override format if needed
+poetry run ssspx --edges docs/examples/small --format csv --source 0
+
+# Random graph
+poetry run ssspx --random --n 1000 --m 5000 --source 0 \
+  --frontier heap --no-transform
+
+# Reproducible random graph
+poetry run ssspx --random --n 10 --m 20 --seed 123
+
+# Profiling to file + brief text report on stderr
+poetry run ssspx --random --n 5000 --m 20000 --source 0 \
+  --frontier block --profile --profile-out prof.cprof 2> prof.txt
+
+# Structured log line with counters
+poetry run ssspx --random --n 10 --m 20 --log-json
+```
+
+---
+
+## Path reconstruction
+
+After `solve()`, extract a path in **original** vertex IDs:
+
+```python
+>>> from ssspx import Graph, SSSPSolver
+>>> G = Graph.from_edges(3, [(0,1,1.0), (1,2,2.0)])
+>>> solver = SSSPSolver(G, 0)
+>>> _ = solver.solve()
+>>> solver.path(2)
+[0, 1, 2]
+```
+
+With the transform enabled, clone cycles are compressed away. Empty list means unreachable.
+
+---
+
+## Exports
+
+```python
+from ssspx.export import export_dag_json, export_dag_graphml
+
+json_str = export_dag_json(G, res.distances)
+gml_str  = export_dag_graphml(G, res.distances)
+
+with open("sp_dag.json","w") as f: f.write(json_str)
+with open("sp_dag.graphml","w") as f: f.write(gml_str)
+```
+
+The DAG contains edges `(u → v)` where `d[v] == d[u] + w(u,v)`.
+
+---
+
+## NumPy CSR backend (optional)
+
+```python
+from ssspx.graph_numpy import NumpyGraph
+
+edges = [(0, 1, 1.0), (1, 2, 2.0), (0, 2, 4.0)]
+G_np = NumpyGraph.from_edges(3, edges)
+res = SSSPSolver(G_np, 0).solve()
+```
+
+`NumpyGraph` is drop‑in because the solver only needs `G.n` and iteration over `G.adj[u] -> (v, w)`.
+
+---
+
+## Benchmarks
+
+```bash
+poetry run python -m ssspx.bench
+```
+
+This uses a small default graph set; provide ``--sizes`` to benchmark custom
+graphs. Treat results as sanity checks. For serious evaluations, pin seeds and
+sizes and run multiple trials.
+
+---
+
+## Testing & quality
+
+```bash
+# Unit + property tests
+poetry run pytest -q --maxfail=1 --disable-warnings --cov=ssspx --cov-report=term-missing
+
+# Static checks
+poetry run mypy src/ssspx
+poetry run flake8 src/ssspx
+poetry run black --check src tests
+poetry run isort --check-only src tests
+
+# All hooks locally
+pre-commit run --all-files
+```
+
+---
+
+## Security
+
+Continuous integration runs [Bandit](https://bandit.readthedocs.io/) on `src/` and
+[pip-audit](https://pypi.org/project/pip-audit/) on the installed dependencies. The build
+fails if Bandit reports any **HIGH** severity issues; medium and low findings are logged for
+manual review. To reproduce locally:
+
+```bash
+poetry run bandit -r src/ssspx -c bandit.yaml --severity-level high
+poetry run pip-audit
+```
+
+Resolve flagged problems by updating dependencies or refactoring code before committing.
+If pip-audit reports an unfixed issue, temporarily suppress it with `--ignore-vuln <ID>` and
+track the upstream resolution.
+
+---
+
+## Versioning, releases & archiving (optional)
+
+Configured for **semantic‑release** with Conventional Commits (Angular style). On pushes to `main`, it bumps the version, updates `CHANGELOG.md`, and creates a GitHub Release.
+
+To mint a DOI, enable the repository at [Zenodo](https://zenodo.org/account/settings/github/). After the first tagged release, Zenodo will archive it and assign a DOI. Replace the badge at the top of this README with the issued DOI.
+
+Guidance on publishing to PyPI and preparing a conda-forge feedstock lives in the [Publishing how-to](docs/howto/publish.md).
+
+Common prefixes: `feat:`, `fix:`, `perf:`, `refactor:`, `docs:`, `test:`, `chore:`.
+
+---
+
+## Cite this work
+
+If you use `ssspx` in academic work, please cite it using the metadata in
+[CITATION.cff](CITATION.cff) or the following BibTeX entry:
+
+```bibtex
+@software{ribeiro_ssspx_2024,
+  author    = {Ribeiro, Diogo},
+  title     = {ssspx},
+  year      = {2024},
+  doi       = {10.5281/zenodo.0000000},
+  url       = {https://github.com/DiogoRibeiro7/bmssp-backhup},
+  publisher = {Zenodo}
+}
+```
+The DOI above is a placeholder. After your first release, run `python tools/update_citation.py <doi>` to update this citation and CITATION.cff.
+
+---
+
+## License
+
+MIT — see `LICENSE`.
+

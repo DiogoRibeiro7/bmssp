@@ -1,0 +1,54 @@
+site_name: ssspx
+repo_url: https://github.com/DiogoRibeiro7/bmssp-backhup
+theme:
+  name: material
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: false
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+nav:
+  - Home: index.md
+  - Tutorials:
+      - Quickstart: tutorials/quickstart.md
+  - How-to:
+      - Exporting: howto/export.md
+      - Benchmarking: howto/benchmarks.md
+      - Publishing: howto/publish.md
+  - Policy:
+      - API stability: policy/api.md
+      - Dependency policy: policy/dependencies.md
+  - Design:
+      - BMSSP: design/bmssp.md
+  - Decisions:
+      - Block frontier: decisions/0001-block-frontier.md
+      - Transform trade-offs: decisions/0002-transform-tradeoffs.md
+      - Equality relaxation: decisions/0003-equality-relax.md
+  - API Reference:
+      - CLI: api/cli.md
+      - Exceptions: api/exceptions.md
+      - Frontier: api/frontier.md
+      - Graph: api/graph.md
+      - Graph (NumPy): api/graph_numpy.md
+      - Path: api/path.md
+      - Solver: api/solver.md
+      - Transform: api/transform.md
+      - Export: api/export.md
+      - IO: api/io.md
+      - Profiling: api/profiling.md
+      - Dijkstra: api/dijkstra.md
+      - Bench: api/bench.md
+      - Logger: api/logger.md
+  - Changelog: changelog.md

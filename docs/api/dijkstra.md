@@ -1,0 +1,3 @@
+# Dijkstra
+
+::: ssspx.dijkstra

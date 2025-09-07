@@ -1,0 +1,34 @@
+{
+  "title": "ssspx: Production-grade Single-Source Shortest Paths",
+  "creators": [
+    {
+      "orcid": "0009-0001-2022-7072",
+      "given_name": "Diogo",
+      "family_name": "Ribeiro",
+      "affiliation": "ESMAD - Instituto Politécnico do Porto"
+    }
+  ],
+  "description": "A deterministic single-source shortest paths solver with an optional transform, benchmarking tools, and documentation.",
+  "keywords": [
+    "graphs",
+    "shortest paths",
+    "Python",
+    "algorithms",
+    "benchmarking"
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "scheme": "url",
+      "identifier": "https://github.com/DiogoRibeiro7/bmssp-backhup",
+      "relation": "isSupplementTo"
+    }
+  ],
+  "funding": [
+    {
+      "funder": "ESMAD - Instituto Politécnico do Porto"
+    }
+  ]
+}
