@@ -115,34 +115,43 @@ def _write_mtx(path: Path, G: Graph) -> None:
 
 
 def _read_graphml(path: Path) -> Tuple[int, EdgeList]:
-    """Parse a GraphML edges file."""
+    """
+    Parse a GraphML file and extract the edge list.
+    Args:
+        path (Path): Path to the GraphML file.
+    Returns:
+        Tuple[int, EdgeList]: A tuple containing the number of nodes (as max node id + 1)
+        and a list of edges, where each edge is represented as a tuple (u, v, w) with
+        integer node IDs and float weights.
+    Raises:
+        GraphFormatError: If no edges are parsed from the file.
+    """
     tree = ET.parse(path)
     root = tree.getroot()
     ns = "{http://graphml.graphdrawing.org/xmlns}"
     edges: EdgeList = []
     max_id = -1
     for edge in root.findall(f".//{ns}edge"):
-        u = edge.attrib.get("source", "")
-        v = edge.attrib.get("target", "")
-        if u.startswith("n"):
-            u = int(u[1:])
+        u_str = edge.attrib.get("source", "")
+        v_str = edge.attrib.get("target", "")
+        
+        # Convert string IDs to integers
+        if u_str.startswith("n"):
+            u = int(u_str[1:])
         else:
-            u = int(u)
-        if v.startswith("n"):
-            v = int(v[1:])
+            u = int(u_str)
+        if v_str.startswith("n"):
+            v = int(v_str[1:])
         else:
-            v = int(v)
+            v = int(v_str)
+            
         w_attr = edge.attrib.get("weight")
         if w_attr is None:
             data = edge.find(f"{ns}data[@key='w']")
-            w = (
-                float(data.text)
-                if (data is not None and data.text is not None)
-                else 1.0
-            )
+            w = float(data.text) if (data is not None and data.text is not None) else 1.0
         else:
             w = float(w_attr)
-        edges.append((u, v, w))
+        edges.append((u, v, w))  # Now u and v are definitely integers
         max_id = max(max_id, u, v)
     if max_id < 0:
         raise GraphFormatError("no edges parsed from file")
