@@ -117,6 +117,7 @@ def _write_mtx(path: Path, G: Graph) -> None:
 def _read_graphml(path: Path) -> Tuple[int, EdgeList]:
     """
     Parse a GraphML file and extract the edge list.
+    
     Args:
         path (Path): Path to the GraphML file.
     Returns:
