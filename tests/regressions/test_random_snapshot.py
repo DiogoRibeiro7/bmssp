@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from ssspx.cli import _build_random_graph
-from ssspx.solver import SSSPSolver, SolverConfig
+from ssspx.solver import SolverConfig, SSSPSolver
 
 FIXTURES = Path(__file__).parent / "fixtures"
 SNAPSHOTS = sorted(FIXTURES.glob("*.json"))

@@ -1,4 +1,4 @@
-from ssspx import Graph, SSSPSolver, SolverConfig
+from ssspx import Graph, SolverConfig, SSSPSolver
 
 
 def solve_distances(edges):

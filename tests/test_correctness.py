@@ -5,7 +5,7 @@ from typing import List, Tuple
 
 import pytest
 
-from ssspx import Graph, SSSPSolver, SolverConfig, dijkstra_reference
+from ssspx import Graph, SolverConfig, SSSPSolver, dijkstra_reference
 
 Edge = Tuple[int, int, float]
 

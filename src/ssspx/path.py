@@ -31,12 +31,7 @@ def reconstruct_path_basic(
     if source == target:
         return [source]
 
-    if (
-        target < 0
-        or target >= len(predecessors)
-        or source < 0
-        or source >= len(predecessors)
-    ):
+    if target < 0 or target >= len(predecessors) or source < 0 or source >= len(predecessors):
         raise ValueError("source/target out of range.")
 
     # Walk backwards from target to source

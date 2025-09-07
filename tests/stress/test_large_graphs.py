@@ -14,7 +14,6 @@ import pytest
 from ssspx.graph import Graph
 from ssspx.solver import SSSPSolver
 
-
 pytestmark = [
     pytest.mark.stress,
     pytest.mark.skipif(

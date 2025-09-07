@@ -2,7 +2,7 @@ import pytest
 
 
 def test_numpy_graph_matches_graph() -> None:
-    from ssspx import Graph, NumpyGraph, SSSPSolver, SolverConfig
+    from ssspx import Graph, NumpyGraph, SolverConfig, SSSPSolver
 
     if NumpyGraph is None:
         pytest.skip("numpy backend not installed")

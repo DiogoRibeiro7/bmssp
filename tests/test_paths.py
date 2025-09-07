@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from ssspx import Graph, SSSPSolver, SolverConfig, dijkstra_reference
+from ssspx import Graph, SolverConfig, SSSPSolver, dijkstra_reference
 from ssspx.path import reconstruct_path_basic
 
 
@@ -11,12 +11,19 @@ def _reconstruct_basic(pred: List[Optional[int]], s: int, t: int) -> list[int]:
 
 
 def test_path_no_transform() -> None:
-    G = Graph.from_edges(6, [
-        (0, 1, 2.0), (0, 2, 5.0),
-        (1, 2, 1.0), (1, 3, 2.0),
-        (2, 3, 1.0), (2, 4, 3.0),
-        (3, 4, 1.0), (4, 5, 1.0),
-    ])
+    G = Graph.from_edges(
+        6,
+        [
+            (0, 1, 2.0),
+            (0, 2, 5.0),
+            (1, 2, 1.0),
+            (1, 3, 2.0),
+            (2, 3, 1.0),
+            (2, 4, 3.0),
+            (3, 4, 1.0),
+            (4, 5, 1.0),
+        ],
+    )
     cfg = SolverConfig(use_transform=False, frontier="heap")
     solver = SSSPSolver(G, 0, cfg)
     res = solver.solve()

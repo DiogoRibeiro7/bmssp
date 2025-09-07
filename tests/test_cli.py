@@ -5,7 +5,7 @@ from typing import List
 
 from ssspx.cli import main
 from ssspx.graph import Graph
-from ssspx.solver import SSSPSolver, SolverConfig
+from ssspx.solver import SolverConfig, SSSPSolver
 
 
 def test_cli_random_invocation(monkeypatch, capsys) -> None:

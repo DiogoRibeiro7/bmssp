@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 
-from ssspx import Graph, SSSPSolver, SolverConfig, dijkstra_reference
+from ssspx import Graph, SolverConfig, SSSPSolver, dijkstra_reference
 
 
 def test_multi_source_paths_and_distances() -> None:

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import warnings
 
-from ssspx.io import load_graph
 from ssspx.deprecation import warn_once
+from ssspx.io import load_graph
 
 
 def test_load_graph_warns_once(tmp_path):

@@ -8,9 +8,7 @@ from .exceptions import ConfigError
 from .graph import Float, Graph, Vertex
 
 
-def constant_outdegree_transform(
-    G: Graph, delta: int
-) -> Tuple[Graph, Dict[Vertex, List[Vertex]]]:
+def constant_outdegree_transform(G: Graph, delta: int) -> Tuple[Graph, Dict[Vertex, List[Vertex]]]:
     """Split vertices so that every vertex has out-degree at most ``delta``.
 
     The transformation replaces a vertex with a chain of clones. Each clone

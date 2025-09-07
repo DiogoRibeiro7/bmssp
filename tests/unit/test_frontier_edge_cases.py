@@ -1,5 +1,7 @@
 import math
+
 import pytest
+
 from ssspx.frontier import BlockFrontier, HeapFrontier
 
 

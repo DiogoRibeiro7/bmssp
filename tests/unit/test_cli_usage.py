@@ -4,7 +4,6 @@ import pytest
 
 from ssspx import cli
 
-
 FIXTURES = Path(__file__).parent / "fixtures"
 
 

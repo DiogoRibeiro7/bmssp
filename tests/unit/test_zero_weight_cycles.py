@@ -1,5 +1,6 @@
 import pytest
-from ssspx import Graph, SSSPSolver, SolverConfig
+
+from ssspx import Graph, SolverConfig, SSSPSolver
 
 
 @pytest.mark.parametrize("use_transform", [False, True])

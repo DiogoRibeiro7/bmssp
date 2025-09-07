@@ -1,35 +1,65 @@
+default_language_version:
+  python: python3.12
+
+exclude: |
+  (?x)(
+    ^\.venv/|
+    ^\.mypy_cache/|
+    ^\.pytest_cache/|
+    ^build/|
+    ^dist/|
+    ^docs/_build/|
+    ^migrations/
+  )
+
 repos:
-- repo: https://github.com/PyCQA/docformatter
-  rev: v1.7.5
-  hooks:
-  - id: docformatter
-    args: ["--wrap-summaries=100", "--wrap-descriptions=100"]
-    files: ^src/
-- repo: https://github.com/pycqa/isort
-  rev: 5.13.2
-  hooks:
-  - id: isort
-    files: ^src/
-    args: ["--profile", "black"]
-- repo: https://github.com/psf/black
-  rev: 24.8.0
-  hooks:
-  - id: black
-    files: ^src/
-- repo: https://github.com/pycqa/flake8
-  rev: 7.1.0
-  hooks:
-  - id: flake8
-    additional_dependencies: [flake8-docstrings]
-    files: ^src/
-    args: ["--max-line-length=100", "--extend-ignore=E203,W503,D401"]
-- repo: https://github.com/pycqa/pydocstyle
-  rev: 6.3.0
-  hooks:
-  - id: pydocstyle
-    files: ^src/
-- repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.10.0
-  hooks:
-  - id: mypy
-    files: ^src/
+  - repo: https://github.com/PyCQA/docformatter
+    rev: v1.7.7          # use master until a 1.7.6+ release lands
+    hooks:
+      - id: docformatter
+        args: ["--wrap-summaries=100", "--wrap-descriptions=100"]
+        files: ^src/
+
+
+  - repo: https://github.com/pycqa/isort
+    rev: 6.0.1
+    hooks:
+      - id: isort
+        files: ^(src|tests)/
+        args: ["--profile", "black", "--line-length", "100"]
+
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+      - id: black
+        files: ^(src|tests)/
+        args: ["--line-length", "100"]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.3.0
+    hooks:
+      - id: flake8
+        files: ^(src|tests)/
+        additional_dependencies:
+          - flake8-docstrings
+          # add plugins you like, e.g. flake8-bugbear
+          # - flake8-bugbear
+        args: ["--max-line-length=88", "--extend-ignore=E203,W503,D401"]
+
+  # Remove this if you keep flake8-docstrings above (to avoid duplicate checks)
+  # - repo: https://github.com/pycqa/pydocstyle
+  #   rev: 6.3.0
+  #   hooks:
+  #     - id: pydocstyle
+  #       files: ^(src|tests)/
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.17.1
+    hooks:
+      - id: mypy
+        files: ^src/
+        # Add stubs your project needs:
+        additional_dependencies:
+          - types-requests
+          - types-PyYAML
+        # If you have mypy.ini/pyproject.toml, it will be picked up automatically

@@ -1,4 +1,5 @@
 import pytest
+
 from ssspx import Graph
 from ssspx.exceptions import GraphFormatError
 

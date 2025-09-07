@@ -1,4 +1,5 @@
 import random
+
 from ssspx import Graph, constant_outdegree_transform
 
 

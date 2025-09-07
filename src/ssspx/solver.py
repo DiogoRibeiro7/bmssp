@@ -265,11 +265,7 @@ class SSSPSolver:
         children: Dict[Vertex, List[Vertex]] = {u: [] for u in W}
         for v in W:
             p = self.pred[v]
-            if (
-                p is not None
-                and p in W
-                and self.dhat[p] + self._weight(p, v) == self.dhat[v]
-            ):
+            if p is not None and p in W and self.dhat[p] + self._weight(p, v) == self.dhat[v]:
                 children[p].append(v)
 
         P: Set[Vertex] = set()
@@ -337,9 +333,7 @@ class SSSPSolver:
                         elif B_i_prime <= val < B_i:
                             K_pairs.append((v, val))
 
-            extra_pairs = [
-                (x, self.dhat[x]) for x in S_i if B_i_prime <= self.dhat[x] < B_i
-            ]
+            extra_pairs = [(x, self.dhat[x]) for x in S_i if B_i_prime <= self.dhat[x] < B_i]
             if K_pairs or extra_pairs:
                 D.batch_prepend(K_pairs + extra_pairs)
 
@@ -362,11 +356,7 @@ class SSSPSolver:
         _Bprime, _U = self._bmssp(top_level, B, S0)
 
         # If we transformed, compress distances back to original vertices (predecessors omitted).
-        if (
-            self.cfg.use_transform
-            and self._mapping is not None
-            and self._clone2orig is not None
-        ):
+        if self.cfg.use_transform and self._mapping is not None and self._clone2orig is not None:
             comp: List[Float] = [math.inf] * self._G_orig.n
             best_clone: List[int] = [-1] * self._G_orig.n
             for u_orig, clones in self._mapping.items():
@@ -405,11 +395,7 @@ class SSSPSolver:
             raise AlgorithmError("Call solve() before requesting paths.")
 
         # No transform: reconstruct directly in original space
-        if (
-            not self.cfg.use_transform
-            or self._mapping is None
-            or self._clone2orig is None
-        ):
+        if not self.cfg.use_transform or self._mapping is None or self._clone2orig is None:
             src = self.root[target_original]
             if src < 0:
                 return []
@@ -420,9 +406,7 @@ class SSSPSolver:
             raise AlgorithmError("target out of range for original graph.")
 
         if self._best_clone_for_orig is None:
-            raise AlgorithmError(
-                "Internal state missing best-clone cache. Call solve() first."
-            )
+            raise AlgorithmError("Internal state missing best-clone cache. Call solve() first.")
 
         start_clone = self._best_clone_for_orig[target_original]
         if start_clone < 0:
