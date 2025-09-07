@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import Iterable, List
 
 import numpy as np
+import numpy.typing as npt
 
 from .exceptions import GraphFormatError, InputError
 from .graph import Edge, Float, Graph, Vertex
@@ -25,8 +26,9 @@ class NumpyGraph:
         """Validate initialization arguments and allocate adjacency storage."""
         if not isinstance(self.n, int) or self.n <= 0:
             raise InputError("Graph.n must be a positive integer.")
-        self.adj: List[np.ndarray] = [
-            np.zeros((0, 2), dtype=float) for _ in range(self.n)
+        # Use proper numpy typing
+        self.adj: List[npt.NDArray[np.float64]] = [
+            np.zeros((0, 2), dtype=np.float64) for _ in range(self.n)
         ]
 
     def add_edge(self, u: Vertex, v: Vertex, w: Float) -> None:
@@ -38,7 +40,7 @@ class NumpyGraph:
         if w < 0:
             raise GraphFormatError(f"negative weight {w} on edge ({u}, {v})")
         arr = self.adj[u]
-        self.adj[u] = np.vstack([arr, np.array([[v, float(w)]])])
+        self.adj[u] = np.vstack([arr, np.array([[v, float(w)]], dtype=np.float64)])
 
     @classmethod
     def from_edges(cls, n: int, edges: Iterable[Edge]) -> "NumpyGraph":
