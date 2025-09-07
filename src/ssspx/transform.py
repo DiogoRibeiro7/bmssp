@@ -50,7 +50,7 @@ def constant_outdegree_transform(
         remaining = edges
         while len(remaining) > delta:
             chunks.append(remaining[: delta - 1])
-            remaining = remaining[delta - 1 :]
+            remaining = remaining[delta - 1:]
         chunks.append(remaining)  # last chunk size <= delta
         clones = [next_id + i for i in range(len(chunks))]
         mapping[u] = clones
