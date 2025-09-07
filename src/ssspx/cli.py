@@ -10,7 +10,8 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import List, Optional, Tuple
 
-from .exceptions import ConfigError, GraphFormatError, InputError, NotSupportedError, SSSPXError
+from .exceptions import (ConfigError, GraphFormatError, InputError,
+                         NotSupportedError, SSSPXError)
 from .export import export_dag_graphml, export_dag_json
 from .graph import Graph
 from .io import read_graph
@@ -104,16 +105,26 @@ def main(argv: Optional[List[str]] = None) -> int:
         default=None,
         help="Comma-separated list of source vertex ids",
     )
-    p.add_argument("--target", type=int, default=None, help="Target vertex id for path output")
+    p.add_argument(
+        "--target", type=int, default=None, help="Target vertex id for path output"
+    )
 
-    p.add_argument("--no-transform", action="store_true", help="Disable outdegree transform")
-    p.add_argument("--target-outdeg", type=int, default=4, help="Outdegree cap when transforming")
+    p.add_argument(
+        "--no-transform", action="store_true", help="Disable outdegree transform"
+    )
+    p.add_argument(
+        "--target-outdeg", type=int, default=4, help="Outdegree cap when transforming"
+    )
     p.add_argument("--frontier", choices=["block", "heap"], default="block")
 
     # Profiling + export
     p.add_argument("--profile", action="store_true", help="Enable cProfile")
-    p.add_argument("--profile-out", type=str, default=None, help="Dump .prof file to this path")
-    p.add_argument("--export-json", type=str, default=None, help="Write shortest-path DAG as JSON")
+    p.add_argument(
+        "--profile-out", type=str, default=None, help="Dump .prof file to this path"
+    )
+    p.add_argument(
+        "--export-json", type=str, default=None, help="Write shortest-path DAG as JSON"
+    )
     p.add_argument(
         "--export-graphml",
         type=str,
@@ -149,7 +160,9 @@ def main(argv: Optional[List[str]] = None) -> int:
         )
 
         stream = sys.stdout if args.log_json else sys.stderr
-        level = "info" if args.log_json and args.log_level == "warning" else args.log_level
+        level = (
+            "info" if args.log_json and args.log_level == "warning" else args.log_level
+        )
         logger = StdLogger(level=level, json_fmt=args.log_json, stream=stream)
 
         if args.sources is not None:
@@ -176,11 +189,15 @@ def main(argv: Optional[List[str]] = None) -> int:
             t0 = time.perf_counter()
             if args.profile:
                 with ProfileSession(dump_path=args.profile_out) as prof:
-                    solver = SSSPSolver(G, sources[0], config=cfg, logger=logger, sources=sources)
+                    solver = SSSPSolver(
+                        G, sources[0], config=cfg, logger=logger, sources=sources
+                    )
                     res = solver.solve()
                 sys.stderr.write(prof.report().to_text(lines=40))
             else:
-                solver = SSSPSolver(G, sources[0], config=cfg, logger=logger, sources=sources)
+                solver = SSSPSolver(
+                    G, sources[0], config=cfg, logger=logger, sources=sources
+                )
                 res = solver.solve()
             wall_ms = (time.perf_counter() - t0) * 1000.0
             _, peak = tracemalloc.get_traced_memory()
@@ -190,11 +207,15 @@ def main(argv: Optional[List[str]] = None) -> int:
             t0 = time.perf_counter()
             if args.profile:
                 with ProfileSession(dump_path=args.profile_out) as prof:
-                    solver = SSSPSolver(G, sources[0], config=cfg, logger=logger, sources=sources)
+                    solver = SSSPSolver(
+                        G, sources[0], config=cfg, logger=logger, sources=sources
+                    )
                     res = solver.solve()
                 sys.stderr.write(prof.report().to_text(lines=40))
             else:
-                solver = SSSPSolver(G, sources[0], config=cfg, logger=logger, sources=sources)
+                solver = SSSPSolver(
+                    G, sources[0], config=cfg, logger=logger, sources=sources
+                )
                 res = solver.solve()
             wall_ms = (time.perf_counter() - t0) * 1000.0
             peak_mib = None

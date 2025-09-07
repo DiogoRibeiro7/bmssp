@@ -3,14 +3,8 @@
 from __future__ import annotations
 
 from .dijkstra import dijkstra_reference
-from .exceptions import (
-    AlgorithmError,
-    ConfigError,
-    GraphError,
-    GraphFormatError,
-    InputError,
-    NotSupportedError,
-)
+from .exceptions import (AlgorithmError, ConfigError, GraphError,
+                         GraphFormatError, InputError, NotSupportedError)
 from .graph import Graph
 
 try:  # pragma: no cover

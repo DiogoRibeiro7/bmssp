@@ -12,5 +12,7 @@ def test_numpy_graph_matches_graph() -> None:
     NG = NumpyGraph.from_edges(3, edges)
     assert NG.out_degree(0) == G.out_degree(0)
     solver1 = SSSPSolver(G, 0, SolverConfig(use_transform=False, frontier="heap"))
-    solver2 = SSSPSolver(NG.to_graph(), 0, SolverConfig(use_transform=False, frontier="heap"))
+    solver2 = SSSPSolver(
+        NG.to_graph(), 0, SolverConfig(use_transform=False, frontier="heap")
+    )
     assert solver1.solve().distances == solver2.solve().distances

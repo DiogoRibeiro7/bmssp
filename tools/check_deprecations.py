@@ -18,7 +18,9 @@ for path in Path("src/ssspx").rglob("*.py"):
     for match in PATTERN.finditer(text):
         ver = tuple(int(p) for p in match.group(1).split("."))
         if ver <= CURRENT:
-            errors.append(f"{path}: remove_in {match.group(1)} <= current {ssspx.__version__}")
+            errors.append(
+                f"{path}: remove_in {match.group(1)} <= current {ssspx.__version__}"
+            )
 
 if errors:
     for e in errors:

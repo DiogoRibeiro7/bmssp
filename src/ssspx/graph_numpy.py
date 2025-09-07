@@ -25,7 +25,9 @@ class NumpyGraph:
         """Validate initialization arguments and allocate adjacency storage."""
         if not isinstance(self.n, int) or self.n <= 0:
             raise InputError("Graph.n must be a positive integer.")
-        self.adj: List[np.ndarray] = [np.zeros((0, 2), dtype=float) for _ in range(self.n)]
+        self.adj: List[np.ndarray] = [
+            np.zeros((0, 2), dtype=float) for _ in range(self.n)
+        ]
 
     def add_edge(self, u: Vertex, v: Vertex, w: Float) -> None:
         """Add a directed edge from ``u`` to ``v``."""

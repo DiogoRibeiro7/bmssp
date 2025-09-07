@@ -5,7 +5,7 @@ import math
 from pathlib import Path
 
 from ssspx.cli import _build_random_graph
-from ssspx.solver import SSSPSolver, SolverConfig
+from ssspx.solver import SolverConfig, SSSPSolver
 
 FIXTURES = Path(__file__).resolve().parents[1] / "tests" / "regressions" / "fixtures"
 

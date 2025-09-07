@@ -23,4 +23,9 @@ def test_export_json_graphml() -> None:
     assert '"nodes":' in s_json and '"edges":' in s_json
 
     s_gml = export_dag_graphml(G, res.distances)
-    assert "<graphml" in s_gml and "<graph" in s_gml and "<node" in s_gml and "<edge" in s_gml
+    assert (
+        "<graphml" in s_gml
+        and "<graph" in s_gml
+        and "<node" in s_gml
+        and "<edge" in s_gml
+    )

@@ -4,6 +4,7 @@ Run this after publishing a release and obtaining a Zenodo DOI:
 
     python tools/update_citation.py 10.5281/zenodo.1234567
 """
+
 from __future__ import annotations
 
 import argparse
