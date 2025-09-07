@@ -134,8 +134,7 @@ def _read_graphml(path: Path) -> Tuple[int, EdgeList]:
     max_id = -1
     for edge in root.findall(f".//{ns}edge"):
         u_str = edge.attrib.get("source", "")
-        v_str = edge.attrib.get("target", "")
-        
+        v_str = edge.attrib.get("target", "")      
         # Convert string IDs to integers
         if u_str.startswith("n"):
             u = int(u_str[1:])
@@ -144,8 +143,7 @@ def _read_graphml(path: Path) -> Tuple[int, EdgeList]:
         if v_str.startswith("n"):
             v = int(v_str[1:])
         else:
-            v = int(v_str)
-            
+            v = int(v_str)    
         w_attr = edge.attrib.get("weight")
         if w_attr is None:
             data = edge.find(f"{ns}data[@key='w']")
