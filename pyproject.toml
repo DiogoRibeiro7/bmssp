@@ -8,8 +8,8 @@ readme = "README.md"
 packages = [{ include = "ssspx", from = "src" }]
 homepage = "https://github.com/DiogoRibeiro7/ssspx"
 repository = "https://github.com/DiogoRibeiro7/ssspx"
-documentation = "https://DiogoRibeiro7.github.io/bmssp-backhup/"
-keywords = ["shortest path", "graph", "dijkstra", "bmssp"]
+documentation = "https://DiogoRibeiro7.github.io/ssspx/"
+keywords = ["shortest path", "graph", "dijkstra", "ssspx"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",

@@ -26,9 +26,9 @@
 ## Documentation
 
 Full guides and the API reference live at the
-[project documentation site](https://DiogoRibeiro7.github.io/bmssp-backhup/).
+[project documentation site](https://DiogoRibeiro7.github.io/ssspx/).
 Algorithmic details are covered in the
-[BMSSP design notes](docs/design/bmssp.md), and key trade‑offs are tracked in
+[BMSSP design notes](docs/design/ssspx.md), and key trade‑offs are tracked in
 [Architecture Decision Records](docs/decisions/).
 
 ## Stability policy
@@ -217,15 +217,16 @@ If you use `ssspx` in academic work, please cite it using the metadata in
 [CITATION.cff](CITATION.cff) or the following BibTeX entry:
 
 ```bibtex
-@software{ribeiro_ssspx_2024,
+@software{ribeiro_ssspx_2025,
   author    = {Ribeiro, Diogo},
   title     = {ssspx},
   year      = {2024},
   doi       = {10.5281/zenodo.0000000},
-  url       = {https://github.com/DiogoRibeiro7/bmssp-backhup},
+  url       = {https://github.com/DiogoRibeiro7/ssspx},
   publisher = {Zenodo}
 }
 ```
+
 The DOI above is a placeholder. After your first release, run `python tools/update_citation.py <doi>` to update this citation and CITATION.cff.
 
 ---
