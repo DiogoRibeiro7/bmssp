@@ -44,7 +44,7 @@ repos:
           - flake8-docstrings
           # add plugins you like, e.g. flake8-bugbear
           # - flake8-bugbear
-        args: ["--max-line-length=88", "--extend-ignore=E203,W503,D401"]
+        args: ["--max-line-length=100", "--extend-ignore=E203,W503,D401"]
 
   # Remove this if you keep flake8-docstrings above (to avoid duplicate checks)
   # - repo: https://github.com/pycqa/pydocstyle
