@@ -1,38 +1,203 @@
-name: Release
+name: CI
+
+env:
+  POETRY_VIRTUALENVS_CREATE: true
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
+  pull_request:
 
 jobs:
-  release:
+  lint:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      id-token: write
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-
-      - name: Install Poetry
-        uses: abatilo/actions-poetry@v3
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+      - uses: abatilo/actions-poetry@v3
         with:
           poetry-version: 1.8.3
+      - name: Install deps
+        timeout-minutes: 5
+        run: poetry install
+      - name: Lint
+        run: poetry run flake8 src/ssspx
+      - name: Docstring style
+        run: poetry run pydocstyle src/ssspx
+      - name: Docstring coverage
+        run: poetry run interrogate -q -c pyproject.toml
+      - name: Type check
+        run: poetry run mypy src/ssspx
+      - name: Security scan
+        run: poetry run bandit -r src/ssspx -c bandit.yaml --severity-level high
+      - name: Dependency audit
+        timeout-minutes: 3
+        run: poetry run pip-audit --ignore-vuln PYSEC-2022-42969
+      - name: Deprecations up-to-date
+        run: poetry run python tools/check_deprecations.py
+      - name: Validate citation metadata
+        run: poetry run cffconvert --validate --infile CITATION.cff
 
-      - name: Install dependencies
-        run: |
-          poetry install
+  unit:
+    needs: lint
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+            C:\\Users\\runneradmin\\AppData\\Local\\pip\\Cache
+            C:\\Users\\runneradmin\\AppData\\Local\\pypoetry\\Cache
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: 1.8.3
+      - name: Install deps
+        timeout-minutes: 5
+        run: poetry install
+      - name: Unit tests
+        timeout-minutes: 10
+        run: poetry run pytest -q --maxfail=1 --disable-warnings --cov=ssspx --cov-report=term-missing -m "not integration" --tb=short
 
-      - name: Run tests
-        run: |
-          poetry run pytest -q --maxfail=1 --disable-warnings
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [lint, unit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: 1.8.3
+      - name: Install deps
+        timeout-minutes: 5
+        run: poetry install
+      - name: Integration tests
+        timeout-minutes: 5
+        run: poetry run pytest -q -m integration --tb=short
 
-      - name: Semantic Release
+  docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [lint, unit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: 1.8.3
+      - name: Install deps
+        timeout-minutes: 5
+        run: poetry install
+      - name: Build docs
+        run: poetry run mkdocs build --strict
+
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [integration, docs]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: 1.8.3
+      - name: Install deps
+        timeout-minutes: 5
+        run: poetry install
+      - name: Build distributions
+        run: poetry build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/*
+      - name: Publish release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          poetry run semantic-release version
-          poetry run semantic-release publish
+        run: poetry run semantic-release publish --skip-build
+
+  extras:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}-numpy
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: 1.8.3
+      - name: Install with extras
+        timeout-minutes: 5
+        run: poetry install -E numpy-backend
+      - name: Unit tests with extras
+        timeout-minutes: 5
+        run: poetry run pytest -q --maxfail=1 --disable-warnings -m "not integration" --tb=short
