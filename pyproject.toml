@@ -77,6 +77,7 @@ changelog_file = "CHANGELOG.md"
 [tool.flake8]
 max-line-length = 100
 extend-ignore = ["E203", "W503", "D401"]
+exclude = [".git", "__pycache__", "build", "dist", ".eggs", "*.pyc", "*.pyo", "tests"]
 
 [tool.pydocstyle]
 convention = "google"
@@ -110,3 +111,23 @@ omit = [
 
 [tool.coverage.report]
 skip_empty = true
+
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = false
+ignore-magic = false
+ignore-semiprivate = false
+ignore-private = false
+ignore-property-decorators = false
+ignore-module = true
+ignore-nested-functions = false
+ignore-nested-classes = true
+ignore-setters = false
+fail-under = 90
+exclude = ["setup.py", "docs", "build", "tests"]
+ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
+verbose = 0
+quiet = false
+whitelist-regex = []
+color = true
+omit-covered-files = false

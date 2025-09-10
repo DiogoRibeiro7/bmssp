@@ -34,7 +34,7 @@ jobs:
       - name: Docstring style
         run: poetry run pydocstyle src/ssspx
       - name: Docstring coverage
-        run: poetry run docstr-coverage src/ssspx --fail-under 90
+        run: poetry run interrogate -q -c pyproject.toml
       - name: Type check
         run: poetry run mypy src/ssspx
       - name: Security scan

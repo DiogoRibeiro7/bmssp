@@ -117,21 +117,15 @@ def main(argv: List[str] | None = None) -> None:
         argv: Optional argument list for testing.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--trials", type=int, default=1, help="Number of trials per configuration"
-    )
+    parser.add_argument("--trials", type=int, default=1, help="Number of trials per configuration")
     parser.add_argument(
         "--sizes",
         nargs="+",
         default=["10,20", "20,40"],
         help="Size pairs as n,m (e.g. 1000,5000). Defaults to a small demo.",
     )
-    parser.add_argument(
-        "--seed-base", type=int, default=0, help="Base seed for random graphs"
-    )
-    parser.add_argument(
-        "--out-csv", type=Path, help="Optional path to write per-trial CSV data"
-    )
+    parser.add_argument("--seed-base", type=int, default=0, help="Base seed for random graphs")
+    parser.add_argument("--out-csv", type=Path, help="Optional path to write per-trial CSV data")
     parser.add_argument(
         "--mem",
         action="store_true",

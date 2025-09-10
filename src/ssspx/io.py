@@ -228,11 +228,7 @@ def _read_graphml(path: Path) -> Tuple[int, EdgeList]:
         w_attr = edge.attrib.get("weight")
         if w_attr is None:
             data = edge.find(f"{ns}data[@key='w']")
-            w = (
-                float(data.text)
-                if (data is not None and data.text is not None)
-                else 1.0
-            )
+            w = float(data.text) if (data is not None and data.text is not None) else 1.0
         else:
             w = float(w_attr)
         edges.append((u, v, w))  # Now u and v are definitely integers

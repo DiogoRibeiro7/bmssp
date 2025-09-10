@@ -186,9 +186,7 @@ class BlockFrontier:
 
         got = self._consume_block_prefix(self._d0, self.M, chosen, pulled_keys)
         if got < self.M:
-            got += self._consume_block_prefix(
-                self._d1, self.M - got, chosen, pulled_keys
-            )
+            got += self._consume_block_prefix(self._d1, self.M - got, chosen, pulled_keys)
             new_bounds: List[Float] = []
             for blk in self._d1:
                 if blk:

@@ -17,9 +17,7 @@ def run_cli(args: List[object], cwd: Path) -> subprocess.CompletedProcess:
     cmd = [sys.executable, "-m", "ssspx.cli", *map(str, args)]
     project_src = Path(__file__).resolve().parents[2] / "src"
     env = {**os.environ, "PYTHONPATH": str(project_src)}
-    return subprocess.run(
-        cmd, cwd=cwd, capture_output=True, text=True, env=env, timeout=10
-    )
+    return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, env=env, timeout=10)
 
 
 def test_edges_json_output(tmp_path: Path) -> None:
