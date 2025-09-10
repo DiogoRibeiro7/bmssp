@@ -21,8 +21,8 @@ def _iter_edges(G: Graph) -> Iterable[Tuple[int, int, float]]:
         G: The graph object containing adjacency information.
 
     Yields:
-        A tuple representing an edge in the graph, where the first element 
-        is the source node index (u), the second element is the destination 
+        A tuple representing an edge in the graph, where the first element
+        is the source node index (u), the second element is the destination
         node index (v), and the third element is the edge weight (w).
     """
     for u in range(G.n):
@@ -34,14 +34,14 @@ def _read_csv(path: Path) -> Tuple[int, EdgeList]:
     """Read a CSV file containing edge data and return the number of nodes and edge list.
 
     Each line in the file should contain at least three columns: source node,
-    target node, and edge weight. Lines starting with '#' or empty lines are 
+    target node, and edge weight. Lines starting with '#' or empty lines are
     ignored. Columns can be separated by commas or tabs.
 
     Args:
         path: The path to the CSV file.
 
     Returns:
-        A tuple containing the number of nodes (max node id + 1) and a list 
+        A tuple containing the number of nodes (max node id + 1) and a list
         of edges, where each edge is represented as a tuple (u, v, w).
 
     Raises:
@@ -95,7 +95,7 @@ def _read_jsonl(path: Path) -> Tuple[int, EdgeList]:
         path: Path to the JSONL file.
 
     Returns:
-        A tuple containing the number of nodes (max node id + 1) and a list 
+        A tuple containing the number of nodes (max node id + 1) and a list
         of edges as (u, v, w) tuples.
 
     Raises:
@@ -149,7 +149,7 @@ def _read_mtx(path: Path) -> Tuple[int, EdgeList]:
     Notes:
         Lines starting with '%' are treated as comments and skipped.
         Assumes the file contains at least three columns: source, target,
-        and weight. Node indices in the file are assumed to be 1-based 
+        and weight. Node indices in the file are assumed to be 1-based
         and are converted to 0-based.
     """
     edges: EdgeList = []
@@ -201,8 +201,8 @@ def _read_graphml(path: Path) -> Tuple[int, EdgeList]:
         path: Path to the GraphML file.
 
     Returns:
-        A tuple containing the number of nodes (as max node id + 1) and a 
-        list of edges, where each edge is represented as a tuple (u, v, w) 
+        A tuple containing the number of nodes (as max node id + 1) and a
+        list of edges, where each edge is represented as a tuple (u, v, w)
         with integer node IDs and float weights.
 
     Raises:
@@ -228,7 +228,11 @@ def _read_graphml(path: Path) -> Tuple[int, EdgeList]:
         w_attr = edge.attrib.get("weight")
         if w_attr is None:
             data = edge.find(f"{ns}data[@key='w']")
-            w = float(data.text) if (data is not None and data.text is not None) else 1.0
+            w = (
+                float(data.text)
+                if (data is not None and data.text is not None)
+                else 1.0
+            )
         else:
             w = float(w_attr)
         edges.append((u, v, w))  # Now u and v are definitely integers
@@ -243,13 +247,13 @@ def _write_graphml(path: Path, G: Graph) -> None:
 
     Args:
         path: The file path where the GraphML output will be written.
-        G: The graph object to serialize, expected to have an attribute `n` 
+        G: The graph object to serialize, expected to have an attribute `n`
            for the number of nodes.
 
     Notes:
-        The function assumes the graph is directed. Each node is assigned an 
-        ID in the format "n{i}". Edges are written with source, target, and 
-        weight attributes. The helper function `_iter_edges(G)` should yield 
+        The function assumes the graph is directed. Each node is assigned an
+        ID in the format "n{i}". Edges are written with source, target, and
+        weight attributes. The helper function `_iter_edges(G)` should yield
         tuples of (u, v, w) for each edge.
     """
     lines: List[str] = []
@@ -287,7 +291,7 @@ def _detect_format(path: Path) -> Optional[str]:
         path: The path to the file whose format is to be detected.
 
     Returns:
-        The detected format as a string ("csv", "jsonl", "mtx", "graphml"), 
+        The detected format as a string ("csv", "jsonl", "mtx", "graphml"),
         or None if the format is not recognized.
     """
     ext = path.suffix.lower()
@@ -329,7 +333,7 @@ def write_graph(G: Graph, path: str, fmt: Optional[str] = None) -> None:
     Args:
         G: The graph object to be written.
         path: The file path where the graph will be saved.
-        fmt: The format to use for writing the graph. If None, the format is 
+        fmt: The format to use for writing the graph. If None, the format is
              auto-detected from the file extension.
 
     Raises:
