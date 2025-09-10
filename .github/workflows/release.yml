@@ -49,40 +49,6 @@ jobs:
       - name: Validate citation metadata
         run: poetry run cffconvert --validate --infile CITATION.cff
 
-        with:
-          python-version: '3.11'
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/pip
-            ~/.cache/pypoetry
-          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-poetry-
-      - uses: abatilo/actions-poetry@v3
-        with:
-          poetry-version: 1.8.3
-      - name: Install deps with numpy
-        timeout-minutes: 5
-        run: poetry install -E numpy-backend
-      - name: Lint
-        run: poetry run flake8 src/ssspx
-      - name: Docstring style
-        run: poetry run pydocstyle src/ssspx
-      - name: Docstring coverage
-        run: poetry run docstr-coverage src/ssspx --fail-under 90
-      - name: Type check
-        run: poetry run mypy src/ssspx
-      - name: Security scan
-        run: poetry run bandit -r src/ssspx -c bandit.yaml --severity-level high
-      - name: Dependency audit
-        timeout-minutes: 3
-        run: poetry run pip-audit --ignore-vuln PYSEC-2022-42969
-      - name: Deprecations up-to-date
-        run: poetry run python tools/check_deprecations.py
-      - name: Validate citation metadata
-        run: poetry run cffconvert --validate --infile CITATION.cff
-
   unit:
     needs: lint
     runs-on: ${{ matrix.os }}
