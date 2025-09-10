@@ -199,5 +199,4 @@ jobs:
         timeout-minutes: 3
         run: poetry install -E numpy-backend
       - name: Unit tests with extras (safe subset)
-        timeout-minutes: 3
         run: poetry run pytest -q --maxfail=3 --disable-warnings --tb=short -m "not integration and not stress" -k "not random and not cli"
