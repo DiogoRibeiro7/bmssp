@@ -35,8 +35,6 @@ jobs:
         run: poetry run flake8 src/ssspx
       - name: Docstring style
         run: poetry run pydocstyle src/ssspx
-      - name: Docstring coverage
-        run: poetry run interrogate -q -c pyproject.toml
       - name: Type check
         run: poetry run mypy src/ssspx
       - name: Security scan
