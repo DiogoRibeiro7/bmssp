@@ -148,9 +148,15 @@ class BlockFrontier:
         """Greedily take up to ``want`` keys from the head of ``blocks``."""
         got = 0
         idx_block = 0
-        while got < want and idx_block < len(blocks):
+        iterations = 0
+        max_iterations = len(blocks) * 100  # Safety limit to prevent infinite loops
+        
+        while got < want and idx_block < len(blocks) and iterations < max_iterations:
+            iterations += 1
             block = blocks[idx_block]
             keep: List[Tuple[Vertex, Float]] = []
+            processed_any = False
+            
             for k, v in block:
                 bestv = self._best.get(k)
                 if bestv is None or v != bestv:
@@ -162,13 +168,21 @@ class BlockFrontier:
                     chosen[k] = v
                     pulled_keys.add(k)
                     got += 1
+                    processed_any = True
                 else:
                     keep.append((k, v))
+            
             blocks[idx_block] = keep
             if not blocks[idx_block]:
                 blocks.pop(idx_block)
+                # Don't increment idx_block since we removed an element
             else:
                 idx_block += 1
+                
+            # If we didn't process anything useful, break to avoid infinite loop
+            if not processed_any and not keep:
+                break
+                
         return got
 
     def pull(self) -> Tuple[Set[Vertex], Float]:
@@ -258,11 +272,16 @@ class HeapFrontier:
     def pull(self) -> Tuple[Set[Vertex], Float]:
         """Return up to ``M`` keys with the smallest values."""
         s: Set[Vertex] = set()
-        while self._heap and len(s) < self.M:
+        iterations = 0
+        max_iterations = len(self._heap) * 2  # Safety limit
+        
+        while self._heap and len(s) < self.M and iterations < max_iterations:
+            iterations += 1
             val, key = heapq.heappop(self._heap)
             if self._best.get(key) != val:
                 continue  # stale
             s.add(key)
+            
         if not s:
             return set(), self.B
         x = self._heap[0][0] if self._heap else self.B
