@@ -146,7 +146,7 @@ class SSSPSolver:
             t = min(t, 20)
         else:
             k = max(1, min(self.cfg.k, 100))  # Safety cap
-            t = max(1, min(self.cfg.t, 20))   # Safety cap
+            t = max(1, min(self.cfg.t, 20))  # Safety cap
         self.k: int = k
         self.t: int = t
         self.L: int = max(1, min(math.ceil(math.log2(n) / t), 10))  # Cap levels
@@ -215,7 +215,7 @@ class SSSPSolver:
         seen: Set[Vertex] = set()
         heap: List[Tuple[Float, Vertex]] = [(self.dhat[x], x)]
         in_heap: Set[Vertex] = {x}
-        
+
         # Safety limits to prevent infinite loops
         iterations = 0
         max_iterations = min(self.k * 1000, self.G.n * 10)
@@ -223,7 +223,7 @@ class SSSPSolver:
         while heap and len(U0) < self.k + 1 and iterations < max_iterations:
             self.counters["basecase_pops"] += 1
             iterations += 1
-            
+
             du, u = heapq.heappop(heap)
             in_heap.discard(u)
             if du != self.dhat[u] or u in seen:
@@ -231,7 +231,7 @@ class SSSPSolver:
             seen.add(u)
             self.complete[u] = True
             U0.append(u)
-            
+
             for v, w in self.G.adj[u]:
                 if self._relax(u, v, w) and self.dhat[u] + w < B:
                     if v not in in_heap:
@@ -262,32 +262,32 @@ class SSSPSolver:
         """
         W: Set[Vertex] = set(S)
         current: Set[Vertex] = set(S)
-        
+
         # Safety limits for findpivots
         iterations = 0
         max_iterations = min(self.k * len(S) * 100, self.G.n * 10)
-        
+
         for round_num in range(1, self.k + 1):
             if iterations >= max_iterations:
                 self.counters["iterations_protected"] += 1
                 break
-                
+
             self.counters["findpivots_rounds"] += 1
             nxt: Set[Vertex] = set()
-            
+
             for u in current:
                 iterations += 1
                 if iterations >= max_iterations:
                     break
-                    
+
                 for v, w in self.G.adj[u]:
                     if self._relax(u, v, w) and (self.dhat[u] + w < B):
                         nxt.add(v)
-                        
+
             if not nxt:
                 break
             W |= nxt
-            
+
             # Early termination if W gets too large
             if len(W) > self.k * max(1, len(S)) * 5:  # More generous limit
                 return set(S), W
@@ -307,7 +307,7 @@ class SSSPSolver:
             seen: Set[Vertex] = set()
             iterations = 0
             max_tree_iterations = min(self.k * 10, len(W))
-            
+
             while stack and iterations < max_tree_iterations:
                 iterations += 1
                 a = stack.pop()
@@ -332,11 +332,13 @@ class SSSPSolver:
             return BlockFrontier(M=M, B=B)
         raise ConfigError(f"unknown frontier '{self.cfg.frontier}'")
 
-    def _bmssp(self, level: int, B: Float, S: Set[Vertex], depth: int = 0) -> Tuple[Float, Set[Vertex]]:
+    def _bmssp(
+        self, level: int, B: Float, S: Set[Vertex], depth: int = 0
+    ) -> Tuple[Float, Set[Vertex]]:
         # Prevent excessive recursion
         if depth > 50 or level > 20:
             return self._base_case(B, S)
-            
+
         if level == 0:
             return self._base_case(B, S)
 
@@ -353,7 +355,7 @@ class SSSPSolver:
         while len(U_accum) < cap and pull_iterations < max_pull_iterations:
             self.counters["pulls"] += 1
             pull_iterations += 1
-            
+
             S_i, B_i = D.pull()
             if not S_i:
                 Bprime = B
@@ -467,7 +469,7 @@ class SSSPSolver:
         seen = set()
         iterations = 0
         max_iterations = self.G.n * 2  # Safety limit
-        
+
         while cur is not None and iterations < max_iterations:
             iterations += 1
             chain.append(cur)
