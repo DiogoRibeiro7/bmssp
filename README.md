@@ -65,12 +65,11 @@ The DOI above is a placeholder. After your first release, run `python tools/upda
 ---
 
 ## Quick start (Python)
-
 ```python
 >>> from ssspx import Graph, SSSPSolver, SolverConfig
 >>> G = Graph.from_edges(4, [(0, 1, 1.0), (1, 2, 2.0), (0, 2, 4.0), (2, 3, 1.0)])
 >>> solver = SSSPSolver(G, 0, config=SolverConfig())
->>> solver.solve().distances
+>>> solver.solve().distances  # doctest: +NORMALIZE_WHITESPACE
 [0.0, 1.0, 3.0, 4.0]
 ```
 
