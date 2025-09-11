@@ -11,5 +11,9 @@ def test_outdegree_bound() -> None:
 
     # Every vertex in G2 must have outdegree <= 2
     assert all(len(G2.adj[u]) <= 2 for u in range(G2.n))
-    # Vertex 0 has ceil(5/2) = 3 clones
-    assert 0 in mapping and len(mapping[0]) == 3
+    # Vertex 0 has 5 edges, with delta=2 it needs 4 clones:
+    # Clone 1: 1 edge + link to clone 2 = 2 edges total
+    # Clone 2: 1 edge + link to clone 3 = 2 edges total  
+    # Clone 3: 1 edge + link to clone 4 = 2 edges total
+    # Clone 4: 2 edges (final) = 2 edges total
+    assert 0 in mapping and len(mapping[0]) == 4
