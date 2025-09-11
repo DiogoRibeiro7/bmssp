@@ -86,11 +86,11 @@ add-ignore = ["D401"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
-addopts = "--cov=ssspx --cov-branch --cov-report=term-missing -m 'not integration and not regression and not stress' --doctest-glob='*.md'"
-testpaths = ["tests", "README.md"]
+addopts = "--cov=ssspx --cov-branch --cov-report=term-missing -m 'not integration and not regression and not stress'"
+testpaths = ["tests"]  # Remove "README.md" from here
 markers = [
     "integration: mark integration tests",
-    "regression: mark regression snapshot tests",
+    "regression: mark regression snapshot tests", 
     "stress: mark stress tests",
 ]
 
