@@ -25,7 +25,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
-      - uses: abatilo/actions-poetry@v3
+      - uses: abatilo/actions-poetry@v4
         with:
           poetry-version: 1.8.3
       - name: Install deps with numpy
@@ -76,7 +76,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
-      - uses: abatilo/actions-poetry@v3
+      - uses: abatilo/actions-poetry@v4
         with:
           poetry-version: 1.8.3
       - name: Install deps
@@ -103,7 +103,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
-      - uses: abatilo/actions-poetry@v3
+      - uses: abatilo/actions-poetry@v4
         with:
           poetry-version: 1.8.3
       - name: Install deps
@@ -130,7 +130,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
-      - uses: abatilo/actions-poetry@v3
+      - uses: abatilo/actions-poetry@v4
         with:
           poetry-version: 1.8.3
       - name: Install deps
@@ -157,7 +157,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
           restore-keys: |
             ${{ runner.os }}-poetry-
-      - uses: abatilo/actions-poetry@v3
+      - uses: abatilo/actions-poetry@v4
         with:
           poetry-version: 1.8.3
       - name: Install deps
@@ -192,7 +192,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}-numpy
           restore-keys: |
             ${{ runner.os }}-poetry-
-      - uses: abatilo/actions-poetry@v3
+      - uses: abatilo/actions-poetry@v4
         with:
           poetry-version: 1.8.3
       - name: Install with extras
