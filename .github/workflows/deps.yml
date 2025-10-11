@@ -48,7 +48,7 @@ jobs:
           PYTHONPATH=src poetry run pytest -q -m integration
           PYTHONPATH=src poetry run pytest -q -m regression
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           commit-message: "deps: weekly dependency updates"
           branch: chore/deps
