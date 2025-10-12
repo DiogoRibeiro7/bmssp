@@ -38,7 +38,7 @@ numpy-backend = ["numpy"]
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2"
-pytest-cov = "^5.0"
+pytest-cov = "^7.0"
 flake8 = "^7.1"
 mypy = "^1.11"
 black = "^24.8"
