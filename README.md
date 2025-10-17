@@ -1,6 +1,9 @@
 # ssspx — Production‑grade Single‑Source Shortest Paths (Python)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.0000000.svg)](https://doi.org/10.5281/zenodo.0000000)
+<!-- GitHub stars/forks -->
+[![GitHub stars](https://img.shields.io/github/stars/diogoribeiro7/bmssp.svg?style=social)](https://github.com/diogoribeiro7/bmssp/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/diogoribeiro7/bmssp.svg?style=social)](https://github.com/diogoribeiro7/bmssp/network/members)
 
 `ssspx` is a clean, typed, and tested implementation of a deterministic **Single‑Source Shortest Paths** solver for directed graphs with non‑negative weights. It follows a BMSSP‑style divide‑and‑conquer design (levels, `FindPivots`, bounded base case) and includes a switchable frontier, an optional constant‑outdegree transform, a CLI, exports, and a small benchmark harness.
 
