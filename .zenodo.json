@@ -1,7 +1,7 @@
 {
   "title": "ssspx: Production-grade Single-Source Shortest Paths",
   "description": "Reference implementation of the deterministic BMSSP algorithm from \"Breaking the Sorting Barrier for Directed Single-Source Shortest Paths\" (Duan, Mao, Mao, Shu, Yin), with tests and benchmarks for directed graphs with non-negative weights.",
-  "version": "v0.1.2",
+  "version": "v0.1.3",
   "upload_type": "software",
   "access_right": "open",
 
