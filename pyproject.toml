@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ssspx"
-version = "0.1.0"
+version = "0.1.1"
 description = "Deterministic SSSP (BMSSP-style) with optional constant-outdegree transform and switchable frontier"
 authors = ["Diogo Ribeiro <dfr@esmad.ipp.pt>"]
 license = "MIT"

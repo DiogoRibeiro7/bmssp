@@ -26,7 +26,7 @@
       {
         "relation_type": { "id": "isSupplementTo" },
         "scheme": "url",
-        "identifier": "https://github.com/DiogoRibeiro7/bmssp-backhup"
+        "identifier": "https://github.com/DiogoRibeiro7/bmsspp"
       }
     ],
     "funding": [
@@ -42,4 +42,3 @@
     "files": "public"
   }
 }
-
