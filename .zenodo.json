@@ -1,44 +1,25 @@
 {
-  "metadata": {
-    "title": "ssspx: Production-grade Single-Source Shortest Paths",
-    "description": "A deterministic single-source shortest paths solver with an optional transform, benchmarking tools, and documentation.",
-    "publication_date": "2025-10-17",
-    "resource_type": { "id": "software" },
-    "creators": [
-      {
-        "person_or_org": {
-          "type": "personal",
-          "given_name": "Diogo",
-          "family_name": "Ribeiro",
-          "identifiers": [
-            { "scheme": "orcid", "identifier": "0009-0001-2022-7072" }
-          ]
-        },
-        "affiliations": [
-          { "name": "ESMAD - Instituto Politécnico do Porto" }
-        ],
-        "role": { "id": "cre" }
-      }
-    ],
-    "license": { "id": "mit-license" },
-    "keywords": ["graphs", "shortest paths", "Python", "algorithms", "benchmarking"],
-    "related_identifiers": [
-      {
-        "relation_type": { "id": "isSupplementTo" },
-        "scheme": "url",
-        "identifier": "https://github.com/DiogoRibeiro7/bmsspp"
-      }
-    ],
-    "funding": [
-      {
-        "funder": { "name": "ESMAD - Instituto Politécnico do Porto" }
-      }
-    ],
-    "version": "v1.0.0",
-    "language": "eng"
-  },
-  "access": {
-    "record": "public",
-    "files": "public"
-  }
+  "title": "ssspx: Production-grade Single-Source Shortest Paths",
+  "description": "A deterministic single-source shortest paths solver with an optional transform, benchmarking tools, and documentation.",
+  "version": "v0.1.2",
+  "upload_type": "software",
+  "access_right": "open",
+
+  "creators": [
+    {
+      "name": "Ribeiro, Diogo",
+      "orcid": "0009-0001-2022-7072",
+      "affiliation": "ESMAD - Instituto Politécnico do Porto"
+    }
+  ],
+
+  "keywords": ["graphs", "shortest paths", "Python", "algorithms", "benchmarking"],
+
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/DiogoRibeiro7/bmssp",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ]
 }
