@@ -1,6 +1,6 @@
 {
   "title": "ssspx: Production-grade Single-Source Shortest Paths",
-  "description": "A deterministic single-source shortest paths solver with an optional transform, benchmarking tools, and documentation.",
+  "description": "Reference implementation of the deterministic BMSSP algorithm from \"Breaking the Sorting Barrier for Directed Single-Source Shortest Paths\" (Duan, Mao, Mao, Shu, Yin), with tests and benchmarks for directed graphs with non-negative weights.",
   "version": "v0.1.2",
   "upload_type": "software",
   "access_right": "open",
@@ -9,17 +9,31 @@
     {
       "name": "Ribeiro, Diogo",
       "orcid": "0009-0001-2022-7072",
-      "affiliation": "ESMAD - Instituto Politécnico do Porto"
+      "affiliation": "ESMAD - Instituto Politécnico do Porto; MySense"
     }
   ],
 
-  "keywords": ["graphs", "shortest paths", "Python", "algorithms", "benchmarking"],
+  "keywords": ["graphs", "shortest paths", "BMSSP", "SSSP", "Python", "algorithms", "benchmarking"],
 
   "related_identifiers": [
     {
+      "identifier": "https://arxiv.org/abs/2504.17033",
+      "relation": "isDerivedFrom",
+      "resource_type": "publication-article",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.1145/3717823.3718179",
+      "relation": "isDerivedFrom",
+      "resource_type": "publication-article",
+      "scheme": "doi"
+    },
+    {
       "identifier": "https://github.com/DiogoRibeiro7/bmssp",
       "relation": "isSupplementTo",
-      "resource_type": "software"
+      "resource_type": "software",
+      "scheme": "url"
     }
   ]
 }
+

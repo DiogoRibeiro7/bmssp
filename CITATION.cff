@@ -10,9 +10,9 @@ authors:
     affiliation: ESMAD - Instituto Politécnico do Porto
 license: MIT
 version: "0.1.0"
-doi: 10.5281/zenodo.0000000
+doi: 10.5281/zenodo.17381998
 date-released: 2024-09-01
-repository-code: "https://github.com/DiogoRibeiro7/bmssp-backhup"
+repository-code: "https://github.com/DiogoRibeiro7/bmssp"
 keywords:
   - graphs
   - shortest paths
@@ -27,8 +27,8 @@ preferred-citation:
       orcid: "https://orcid.org/0009-0001-2022-7072"
   title: ssspx
   version: "0.1.0"
-  doi: 10.5281/zenodo.17381919
-  url: https://github.com/DiogoRibeiro7/bmssp-backhup
+  doi: 10.5281/zenodo.17381998
+  url: https://github.com/DiogoRibeiro7/bmssp
   publisher:
     name: Zenodo
   date-released: 2024-09-01

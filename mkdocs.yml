@@ -1,5 +1,5 @@
 site_name: ssspx
-repo_url: https://github.com/DiogoRibeiro7/bmssp-backhup
+repo_url: https://github.com/DiogoRibeiro7/bmssp
 theme:
   name: material
 plugins:

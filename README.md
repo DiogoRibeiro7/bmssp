@@ -1,22 +1,27 @@
-# ssspx — Production‑grade Single‑Source Shortest Paths (Python)
+# ssspx — Production-grade Single-Source Shortest Paths (Python)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.0000000.svg)](https://doi.org/10.5281/zenodo.0000000)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17381998.svg)](https://doi.org/10.5281/zenodo.17381998)
+
 <!-- GitHub stars/forks -->
-[![GitHub stars](https://img.shields.io/github/stars/diogoribeiro7/bmssp.svg?style=social)](https://github.com/diogoribeiro7/bmssp/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/diogoribeiro7/bmssp.svg?style=social)](https://github.com/diogoribeiro7/bmssp/network/members)
 
-`ssspx` is a clean, typed, and tested implementation of a deterministic **Single‑Source Shortest Paths** solver for directed graphs with non‑negative weights. It follows a BMSSP‑style divide‑and‑conquer design (levels, `FindPivots`, bounded base case) and includes a switchable frontier, an optional constant‑outdegree transform, a CLI, exports, and a small benchmark harness.
+[![GitHub stars](https://img.shields.io/github/stars/diogoribeiro7/bmssp.svg?style=social)](https://github.com/DiogoRibeiro7/bmssp/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/diogoribeiro7/bmssp.svg?style=social)](https://github.com/DiogoRibeiro7/bmssp/network/members)
 
-> For the advertised asymptotics, use the **block frontier** with the **constant‑outdegree transform** enabled. Distances are exact either way.
+`ssspx` is a clean, typed, and tested implementation of a deterministic **Single-Source Shortest Paths** solver for directed graphs with non-negative weights.
+It follows a BMSSP-style divide-and-conquer design (levels, `FindPivots`, bounded base case) and includes a switchable frontier, an optional constant-outdegree transform, a CLI, exports, and a small benchmark harness.
+
+> Research context: this is an implementation of the algorithmic approach from
+> **“Breaking the Sorting Barrier for Directed Single-Source Shortest Paths” (arXiv:2504.17033)** by Duan, Mao, Mao, Shu, and Yin.
+> Distances are exact. For the advertised asymptotics, use the **block frontier** with the **constant-outdegree transform** enabled.
 
 ---
 
 ## Features
 
-* Two frontiers: `block` (paper‑style) and `heap` (baseline)
-* Optional constant‑outdegree transform (cap configurable, default 4)
+* Two frontiers: `block` (paper-style) and `heap` (baseline)
+* Optional constant-outdegree transform (cap configurable, default 4)
 * Path reconstruction in original vertex IDs (works with or without transform)
-* Shortest‑path DAG export to **JSON** and **GraphML**
+* Shortest-path DAG export to **JSON** and **GraphML**
 * CLI with CSV/TSV/JSONL/MTX/GraphML input, random graphs, and optional cProfile
 * Benchmark harness vs. Dijkstra
 * Typed (mypy), linted (flake8/black/isort), tested (pytest + Hypothesis)
@@ -24,21 +29,21 @@
 ## Limitations
 
 * Edge weights must be **non-negative**. Supplying a negative weight raises a
-  ``GraphFormatError`` that points to the exact offending edge.
+  `GraphFormatError` that points to the exact offending edge.
 
 ## Documentation
 
 Full guides and the API reference live at the
 [project documentation site](https://DiogoRibeiro7.github.io/ssspx/).
 Algorithmic details are covered in the
-[BMSSP design notes](docs/design/ssspx.md), and key trade‑offs are tracked in
+[BMSSP design notes](docs/design/ssspx.md), and key trade-offs are tracked in
 [Architecture Decision Records](docs/decisions/).
 
 ## Stability policy
 
 Public modules and classes are listed in our
 [API stability policy](docs/policy/api.md). Deprecated names emit warnings and
-are removed after the stated ``remove_in`` release.
+are removed after the stated `remove_in` release.
 
 ## Contributing
 
@@ -63,11 +68,10 @@ Install with NumPy extras:
 poetry install -E numpy-backend
 ```
 
-The DOI above is a placeholder. After your first release, run `python tools/update_citation.py <doi>` to update this citation and CITATION.cff.
-
 ---
 
 ## Quick start (Python)
+
 ```python
 >>> from ssspx import Graph, SSSPSolver, SolverConfig
 >>> G = Graph.from_edges(4, [(0, 1, 1.0), (1, 2, 2.0), (0, 2, 4.0), (2, 3, 1.0)])
@@ -148,7 +152,7 @@ G_np = NumpyGraph.from_edges(3, edges)
 res = SSSPSolver(G_np, 0).solve()
 ```
 
-`NumpyGraph` is drop‑in because the solver only needs `G.n` and iteration over `G.adj[u] -> (v, w)`.
+`NumpyGraph` is drop-in because the solver only needs `G.n` and iteration over `G.adj[u] -> (v, w)`.
 
 ---
 
@@ -158,7 +162,7 @@ res = SSSPSolver(G_np, 0).solve()
 poetry run python -m ssspx.bench
 ```
 
-This uses a small default graph set; provide ``--sizes`` to benchmark custom
+This uses a small default graph set; provide `--sizes` to benchmark custom
 graphs. Treat results as sanity checks. For serious evaluations, pin seeds and
 sizes and run multiple trials.
 
@@ -200,13 +204,11 @@ track the upstream resolution.
 
 ---
 
-## Versioning, releases & archiving (optional)
+## Versioning, releases & archiving
 
-Configured for **semantic‑release** with Conventional Commits (Angular style). On pushes to `main`, it bumps the version, updates `CHANGELOG.md`, and creates a GitHub Release.
+Configured for **semantic-release** with Conventional Commits (Angular style). On pushes to `main`, it bumps the version, updates `CHANGELOG.md`, and creates a GitHub Release.
 
-To mint a DOI, enable the repository at [Zenodo](https://zenodo.org/account/settings/github/). After the first tagged release, Zenodo will archive it and assign a DOI. Replace the badge at the top of this README with the issued DOI.
-
-Guidance on publishing to PyPI and preparing a conda-forge feedstock lives in the [Publishing how-to](docs/howto/publish.md).
+Releases are archived on **Zenodo**. The latest release DOI is **[10.5281/zenodo.17381998](https://doi.org/10.5281/zenodo.17381998)** (badge at the top).
 
 Common prefixes: `feat:`, `fix:`, `perf:`, `refactor:`, `docs:`, `test:`, `chore:`.
 
@@ -214,25 +216,27 @@ Common prefixes: `feat:`, `fix:`, `perf:`, `refactor:`, `docs:`, `test:`, `chore
 
 ## Cite this work
 
-If you use `ssspx` in academic work, please cite it using the metadata in
-[CITATION.cff](CITATION.cff) or the following BibTeX entry:
+If you use `ssspx` in academic work, please cite:
+
+**The algorithmic paper**
+
+> Duan, R., Mao, J., Mao, X., Shu, X., & Yin, L. (2025). *Breaking the Sorting Barrier for Directed Single-Source Shortest Paths.* arXiv:2504.17033.
+
+**This software**
 
 ```bibtex
 @software{ribeiro_ssspx_2025,
   author    = {Ribeiro, Diogo},
-  title     = {ssspx},
-  year      = {2024},
-  doi       = {10.5281/zenodo.0000000},
-  url       = {https://github.com/DiogoRibeiro7/ssspx},
+  title     = {ssspx — Production-grade Single-Source Shortest Paths (Python)},
+  year      = {2025},
+  doi       = {10.5281/zenodo.17381998},
+  url       = {https://github.com/DiogoRibeiro7/bmssp},
   publisher = {Zenodo}
 }
 ```
-
-The DOI above is a placeholder. After your first release, run `python tools/update_citation.py <doi>` to update this citation and CITATION.cff.
 
 ---
 
 ## License
 
 MIT — see `LICENSE`.
-
