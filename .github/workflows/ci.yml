@@ -28,9 +28,12 @@ jobs:
       - uses: abatilo/actions-poetry@v4
         with:
           poetry-version: 1.8.3
+
+      # Keep your install for lint/type/doc checks
       - name: Install deps with numpy
         timeout-minutes: 5
         run: poetry install -E numpy-backend
+
       - name: Lint
         run: poetry run flake8 src/ssspx
       - name: Docstring style
@@ -41,13 +44,22 @@ jobs:
         run: poetry run mypy src/ssspx
       - name: Security scan
         run: poetry run bandit -r src/ssspx -c bandit.yaml --severity-level high
-      - name: Dependency audit
+
+      # ✅ Audit third-party deps only (export requirements)
+      - name: Export prod requirements (include extras)
+        run: |
+          poetry export --without-hashes -f requirements.txt -o audit-req.txt --extras numpy-backend
+      - name: Dependency audit (requirements file)
         timeout-minutes: 3
-        run: poetry run pip-audit --ignore-vuln PYSEC-2022-42969
+        run: |
+          # optional: hide spinner in CI logs
+          poetry run pip-audit -r audit-req.txt --ignore-vuln PYSEC-2022-42969 --progress-spinner=off
+
       - name: Deprecations up-to-date
         run: poetry run python tools/check_deprecations.py
       - name: Validate citation metadata
         run: poetry run cffconvert --validate --infile CITATION.cff
+
 
   unit:
     needs: lint
