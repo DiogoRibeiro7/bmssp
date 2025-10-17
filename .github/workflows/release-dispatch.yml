@@ -1,0 +1,102 @@
+# .github/workflows/release-dispatch.yml
+name: Release (manual, from pyproject)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push tags & create releases
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # required to create/push tags
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Read version from pyproject.toml
+        id: version
+        shell: bash
+        run: |
+          python - <<'PY'
+          import sys, pathlib
+          try:
+              import tomllib  # Python 3.11+
+          except Exception:
+              print("::error::tomllib not available; require Python 3.11+")
+              sys.exit(1)
+
+          p = pathlib.Path("pyproject.toml")
+          if not p.exists():
+              print("::error::pyproject.toml not found")
+              sys.exit(1)
+
+          data = tomllib.loads(p.read_text())
+          version = None
+
+          # PEP 621
+          project = data.get("project") or {}
+          version = project.get("version")
+
+          # Poetry fallback
+          if not version:
+              tool = data.get("tool") or {}
+              poetry = tool.get("poetry") or {}
+              version = poetry.get("version")
+
+          if not version:
+              print("::error::Version not found in pyproject.toml (project.version or tool.poetry.version).")
+              sys.exit(1)
+
+          with open("$GITHUB_OUTPUT", "a") as fh:
+              fh.write(f"value={version}\n")
+          PY
+          echo "Detected version: ${{ steps.version.outputs.value }}"
+
+      - name: Create and push tag
+        env:
+          VERSION: ${{ steps.version.outputs.value }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v${VERSION}"
+
+          # Fail if tag already exists remote or locally
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            echo "::error::Tag $TAG already exists locally."; exit 1
+          fi
+          if git ls-remote --exit-code --tags origin "$TAG" >/dev/null 2>&1; then
+            echo "::error::Tag $TAG already exists on origin."; exit 1
+          fi
+
+          # Configure bot identity
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Tag current HEAD of the checked-out branch
+          git tag -a "$TAG" -m "$TAG"
+          git push origin "$TAG"
+
+      # ---- Optional: build Python artifacts (wheel/sdist) and attach to release
+      # - name: Build package
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     python -m pip install build
+      #     python -m build
+      #
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.value }}
+          generate_release_notes: true
+          # files: |
+          #   dist/*.whl
+          #   dist/*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
