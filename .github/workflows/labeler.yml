@@ -1,16 +1,18 @@
-name: PR labeler
-on:
+name: Community
+on: 
+  issues:
+    types: [opened, edited, milestoned]
   pull_request_target:
-    types: [opened, edited, synchronize, reopened]
+    types: [opened]
 
 jobs:
-  label:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
 
-      - name: Run labeler
-        uses: jimschubert/labeler-action@v2
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          configuration-path: .github/labels.yml
+  labeler:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check Labels
+      id: labeler
+      uses: jimschubert/labeler-action@v2
+      with:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
