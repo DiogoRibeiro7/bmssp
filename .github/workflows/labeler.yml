@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: jimschubert/labeler-action@v2
+
+      - name: Run labeler
+        uses: jimschubert/labeler-action@v2
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           configuration-path: .github/labels.yml
