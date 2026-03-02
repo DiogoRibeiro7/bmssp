@@ -55,7 +55,7 @@ mkdocs = "^1.6.1"
 mkdocs-material = "^9.7.2"
 mkdocstrings = {extras = ["python"], version = "^1.0.3"}
 mkdocs-jupyter = "^0.25.1"
-bandit = "^1.9.2"
+bandit = "^1.9.4"
 pip-audit = "^2.10.0"
 cibuildwheel = "^2.19.1"
 twine = "^6.2.0"
