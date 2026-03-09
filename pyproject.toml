@@ -52,7 +52,7 @@ docstr-coverage = "^2.3"
 cffconvert = "^2.0"
 cryptography = {version = "^46.0.5", markers = "python_version != '3.9.0' and python_version != '3.9.1'"}
 mkdocs = "^1.6.1"
-mkdocs-material = "^9.7.3"
+mkdocs-material = "^9.7.4"
 mkdocstrings = {extras = ["python"], version = "^1.0.3"}
 mkdocs-jupyter = "^0.25.1"
 bandit = "^1.9.4"
