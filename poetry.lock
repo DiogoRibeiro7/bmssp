@@ -534,14 +534,14 @@ files = [
 
 [[package]]
 name = "cibuildwheel"
-version = "2.23.3"
+version = "2.23.4"
 description = "Build Python wheels on CI with minimal configuration."
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "cibuildwheel-2.23.3-py3-none-any.whl", hash = "sha256:0fa40073ae23a56d5f995d8405e82c1206049999bb89b92aa0835ee62ab8a891"},
-    {file = "cibuildwheel-2.23.3.tar.gz", hash = "sha256:d85dd15b7eb81711900d8129e67efb32b12f99cc00fc271ab060fa6270c38397"},
+    {file = "cibuildwheel-2.23.4-py3-none-any.whl", hash = "sha256:2f4300e9709bff0a83fd89d88f418df2c8da69bf40c010aa4a4b80156be3fbd5"},
+    {file = "cibuildwheel-2.23.4.tar.gz", hash = "sha256:5a3e4a3d9c18e77838c37c483642e4f071da06ec05c05336826cc46c97abb708"},
 ]
 
 [package.dependencies]
@@ -4267,4 +4267,4 @@ numpy-backend = ["numpy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.13"
-content-hash = "51ec8ab2598bc81bea313fba64698898e1d5ff0261e8b9a83ddc95650e88e27c"
+content-hash = "8478d325d03e71320f5061474ecab3b665d90a2c2ca66c5ebb91f22a3cd64f5d"
