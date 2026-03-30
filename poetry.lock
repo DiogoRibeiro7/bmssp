@@ -2029,18 +2029,18 @@ pyyaml = ">=5.1"
 
 [[package]]
 name = "mkdocs-jupyter"
-version = "0.25.1"
+version = "0.26.1"
 description = "Use Jupyter in mkdocs websites"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "mkdocs_jupyter-0.25.1-py3-none-any.whl", hash = "sha256:3f679a857609885d322880e72533ef5255561bbfdb13cfee2a1e92ef4d4ad8d8"},
-    {file = "mkdocs_jupyter-0.25.1.tar.gz", hash = "sha256:0e9272ff4947e0ec683c92423a4bfb42a26477c103ab1a6ab8277e2dcc8f7afe"},
+    {file = "mkdocs_jupyter-0.26.1-py3-none-any.whl", hash = "sha256:527242c2c8f1d30970764bbab752de41243e5703f458d8bc05336ec53828192e"},
+    {file = "mkdocs_jupyter-0.26.1.tar.gz", hash = "sha256:7c80c0d3953de91e5b40a0d3209233795c8f800243ab298e4ec38e0504eda630"},
 ]
 
 [package.dependencies]
-ipykernel = ">6.0.0,<7.0.0"
+ipykernel = ">6.0.0,<8"
 jupytext = ">1.13.8,<2"
 mkdocs = ">=1.4.0,<2"
 mkdocs-material = ">9.0.0"
@@ -4268,4 +4268,4 @@ numpy-backend = ["numpy"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.13"
-content-hash = "7aa2e0ce8611b94152e2b81b02f37c209c320a84fee250abdbb0f14d51cd0e7f"
+content-hash = "b09bdaf818bf00bacce2fb9afbd7b69638348bd4c38687dd8b7b85520422d359"
