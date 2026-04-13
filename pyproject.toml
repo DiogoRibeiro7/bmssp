@@ -54,7 +54,7 @@ cryptography = {version = "^46.0.5", markers = "python_version != '3.9.0' and py
 mkdocs = "^1.6.1"
 mkdocs-material = "^9.7.6"
 mkdocstrings = {extras = ["python"], version = "^1.0.3"}
-mkdocs-jupyter = "^0.25.1"
+mkdocs-jupyter = "^0.26.2"
 bandit = "^1.9.4"
 pip-audit = "^2.10.0"
 cibuildwheel = "^2.23.4"
