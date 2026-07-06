@@ -9,9 +9,7 @@ authors:
     email: dfr@esmad.ipp.pt
     affiliation: ESMAD - Instituto Politécnico do Porto
 license: MIT
-version: "0.1.0"
-doi: 10.5281/zenodo.17381998
-date-released: 2024-09-01
+doi: 10.5281/zenodo.17381904
 repository-code: "https://github.com/DiogoRibeiro7/bmssp"
 keywords:
   - graphs
@@ -26,9 +24,7 @@ preferred-citation:
       given-names: Diogo
       orcid: "https://orcid.org/0009-0001-2022-7072"
   title: ssspx
-  version: "0.1.0"
-  doi: 10.5281/zenodo.17381998
+  doi: 10.5281/zenodo.17381904
   url: https://github.com/DiogoRibeiro7/bmssp
   publisher:
     name: Zenodo
-  date-released: 2024-09-01

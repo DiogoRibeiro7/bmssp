@@ -1,6 +1,6 @@
 # ssspx — Production-grade Single-Source Shortest Paths (Python)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17381998.svg)](https://doi.org/10.5281/zenodo.17381998)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17381904.svg)](https://doi.org/10.5281/zenodo.17381904)
 
 <!-- GitHub stars/forks -->
 
@@ -281,7 +281,7 @@ track the upstream resolution.
 
 Configured for **semantic-release** with Conventional Commits (Angular style). On pushes to `main`, it bumps the version, updates `CHANGELOG.md`, and creates a GitHub Release.
 
-Releases are archived on **Zenodo**. The latest release DOI is **[10.5281/zenodo.17381998](https://doi.org/10.5281/zenodo.17381998)** (badge at the top).
+Releases are archived on **Zenodo**. The archive DOI is **[10.5281/zenodo.17381904](https://doi.org/10.5281/zenodo.17381904)** (badge at the top).
 
 Common prefixes: `feat:`, `fix:`, `perf:`, `refactor:`, `docs:`, `test:`, `chore:`.
 
@@ -302,7 +302,7 @@ If you use `ssspx` in academic work, please cite:
   author    = {Ribeiro, Diogo},
   title     = {ssspx — Production-grade Single-Source Shortest Paths (Python)},
   year      = {2025},
-  doi       = {10.5281/zenodo.17381998},
+  doi       = {10.5281/zenodo.17381904},
   url       = {https://github.com/DiogoRibeiro7/bmssp},
   publisher = {Zenodo}
 }
