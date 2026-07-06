@@ -22,7 +22,7 @@ from .logger import Logger, NoopLogger, StdLogger
 from .solver import SolverConfig, SolverMetrics, SSSPResult, SSSPSolver
 from .transform import constant_outdegree_transform
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 __all__ = [
     "Graph",
