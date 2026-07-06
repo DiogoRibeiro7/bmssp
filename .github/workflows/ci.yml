@@ -175,17 +175,10 @@ jobs:
       - name: Install deps
         timeout-minutes: 5
         run: poetry install
-      - name: Build distributions
-        run: poetry build
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v7
-        with:
-          name: dist
-          path: dist/*
-      - name: Publish release
+      - name: Create version, tag, and release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: poetry run semantic-release publish --skip-build
+        run: poetry run semantic-release version
 
   extras:
     runs-on: ubuntu-latest
