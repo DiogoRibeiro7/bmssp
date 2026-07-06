@@ -156,6 +156,8 @@ jobs:
     timeout-minutes: 15
     needs: [integration, docs]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
