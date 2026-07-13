@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ssspx"
-version = "1.0.0"
+version = "1.1.0"
 description = "Deterministic SSSP (BMSSP-style) with optional constant-outdegree transform and switchable frontier"
 authors = ["Diogo Ribeiro <dfr@esmad.ipp.pt>"]
 license = "MIT"
@@ -40,7 +40,7 @@ numpy-backend = ["numpy"]
 pytest = "^9.0"
 pytest-cov = "^7.1"
 flake8 = "^7.1"
-mypy = "^1.19"
+mypy = ">=1.19,<3.0"
 black = "^26.3"
 isort = "^8.0"
 pre-commit = "^4.5"
@@ -50,7 +50,7 @@ pydocstyle = "^6.3"
 flake8-docstrings = "^1.7"
 docstr-coverage = "^2.3"
 cffconvert = "^2.0"
-cryptography = {version = "^46.0.6", markers = "python_version != '3.9.0' and python_version != '3.9.1'"}
+cryptography = {version = ">=46.0.6,<50.0.0", markers = "python_version != '3.9.0' and python_version != '3.9.1'"}
 mkdocs = "^1.6.1"
 mkdocs-material = "^9.7.6"
 mkdocstrings = {extras = ["python"], version = "^1.0.3"}
@@ -59,7 +59,7 @@ bandit = "^1.9.4"
 pip-audit = "^2.10.0"
 cibuildwheel = "^2.23.4"
 twine = "^6.2.0"
-nbclient = "^0.10"
+nbclient = ">=0.10,<0.12"
 interrogate = "^1.7.0"
 
 [tool.poetry.scripts]
