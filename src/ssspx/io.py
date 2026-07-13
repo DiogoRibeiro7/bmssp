@@ -7,7 +7,6 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Iterable, List, Optional, Tuple
 
-from .deprecation import warn_once
 from .exceptions import GraphFormatError
 from .graph import Graph
 
@@ -340,26 +339,3 @@ def write_graph(G: Graph, path: str, fmt: Optional[str] = None) -> None:
     if fmt is None or fmt not in _FMT_WRITERS:
         raise GraphFormatError("unknown graph format")
     _FMT_WRITERS[fmt](p, G)
-
-
-def load_graph(path: str, fmt: Optional[str] = None) -> Graph:
-    """Load a graph from the specified file path.
-
-    This function is deprecated; use `read_graph` instead.
-
-    Args:
-        path: The path to the graph file.
-        fmt: The format of the graph file. Defaults to None.
-
-    Returns:
-        The loaded graph object.
-
-    Deprecated:
-        Since version 0.1.0. Will be removed in version 0.2.0. Use `read_graph` instead.
-    """
-    warn_once(
-        "load_graph is deprecated; use read_graph",
-        since="0.1.0",
-        remove_in="0.2.0",
-    )
-    return read_graph(path, fmt=fmt)

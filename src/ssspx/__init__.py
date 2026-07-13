@@ -17,12 +17,12 @@ try:  # pragma: no cover
     from .graph_numpy import NumpyGraph
 except ModuleNotFoundError:  # pragma: no cover
     NumpyGraph = None  # type: ignore[misc, assignment]
-from .io import load_graph, read_graph, write_graph
+from .io import read_graph, write_graph
 from .logger import Logger, NoopLogger, StdLogger
 from .solver import SolverConfig, SolverMetrics, SSSPResult, SSSPSolver
 from .transform import constant_outdegree_transform
 
-__version__ = "1.0.1"
+__version__ = "1.1.0"
 
 __all__ = [
     "Graph",
@@ -38,7 +38,6 @@ __all__ = [
     "StdLogger",
     "read_graph",
     "write_graph",
-    "load_graph",
     "GraphError",
     "AlgorithmError",
     "InputError",
