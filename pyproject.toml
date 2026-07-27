@@ -58,7 +58,7 @@ mkdocs-jupyter = "^0.26.3"
 bandit = "^1.9.4"
 pip-audit = "^2.10.0"
 cibuildwheel = "^2.23.4"
-twine = "^6.2.0"
+twine = ">=6.2,<8.0"
 nbclient = ">=0.10,<0.12"
 interrogate = "^1.7.0"
 
